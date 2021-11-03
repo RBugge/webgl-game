@@ -78,7 +78,7 @@ window.addEventListener("load", async function () {
     rayman2.rotate({ z: -45 });
 
     camera = {
-        position: [20, 0, 20],
+        position: [0, 10, 30],
         lookAt: [0, 0, 0],
     }
 
@@ -186,6 +186,7 @@ getProjectionMatrix = (fov, near, far, object) => {
 // Main Loop, called every frame
 onRender = () => {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    camera.position = [10*Math.sin(time), 10, 30];
 
     // Render every game object and run its update function
     scene.forEach(o => {
