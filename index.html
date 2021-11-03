@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+  <meta content="utf-8" http-equiv="encoding" />
+
+  <link rel="shortcut icon" href="#" />
+  <style>
+    html,
+    body {
+      margin: 0px;
+      padding: 0px;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background-color: #404040;
+    }
+
+    canvas {
+      border: 1px solid black;
+      width: 1000px;
+      height: 1000px;
+    }
+
+    div {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+
+  <script src="twgl.js/dist/4.x/twgl-full.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+    integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
+    crossorigin="anonymous"></script>
+  <script src="js/OBJLoader.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/modelUtils.js"></script>
+  <script src="js/GameLoop.js"></script>
+  <script src="js/GameObject.js"></script>
+
+  <script src="assets/rayman/raymanScript.js"></script>
+  <script src="assets/rayman/shaders.js"></script>
+
+  <script src="js/main.js"></script>
+</head>
+
+<body>
+  <div>
+    <canvas id="glcanvas"></canvas>
+  </div>
+</body>
+
+</html>
