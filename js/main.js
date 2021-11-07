@@ -93,6 +93,8 @@ window.addEventListener("load", async function () {
     boy.rotate({z: -45});
     boy.translate([5, 0, 0]);
 
+    console.log(boy.position);
+
 
     // house.scale(0.5);
 

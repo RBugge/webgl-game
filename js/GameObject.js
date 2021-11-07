@@ -76,6 +76,7 @@ class GameObject {
         ]);
 
         this.modelMatrix = m4.multiply(m4.multiply(m4.multiply(m4.multiply(S, R_z), R_y), R_x), T);
+        this.position = this.modelMatrix.subarray(12);
     }
 
     // Accumulate translations
