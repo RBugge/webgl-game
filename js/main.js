@@ -90,11 +90,8 @@ window.addEventListener("load", async function () {
     rayman.rotate({z: 30});
     rayman.scale(2);
 
-    boy.rotate({z: -45});
-    boy.translate([5, 0, 0]);
-
-    console.log(boy.position);
-
+    boy.rotate({z: 90});
+    boy.translate([2, 0, 0]);
 
     // house.scale(0.5);
 

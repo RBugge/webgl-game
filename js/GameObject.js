@@ -76,7 +76,13 @@ class GameObject {
         ]);
 
         this.modelMatrix = m4.multiply(m4.multiply(m4.multiply(m4.multiply(S, R_z), R_y), R_x), T);
-        this.position = this.modelMatrix.subarray(12);
+
+        // Jankiness to store position with fixed number of decimals to avoid float errors
+        let temp = [];
+        this.position = this.modelMatrix.subarray(12, 15).map(val =>
+            temp.push(parseFloat(Number(Math.round(parseFloat(val + 'e' + 2)) + 'e-' + 2).toFixed(2)))
+        );
+        this.position = temp;
     }
 
     // Accumulate translations
