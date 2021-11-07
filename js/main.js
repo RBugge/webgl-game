@@ -7,33 +7,46 @@ let m4 = twgl.m4;
 let mat4;
 const loader = new THREE.OBJLoader();
 
-let fov_Y = 70;
+let fov = 70;
 let cameraAngles = {
     y_angle: 180,
     x_angle: -60,
 };
 
-let near = 0.1;
-let far = 2.5;
-let canvasWidth = 1000;
-let canvasHeight = 1000;
-let aspect = canvasWidth / canvasHeight;
+let near = 0.01;
+let far = 2000;
+let aspect;
+let projectionMatrix;
+let viewMatrix;
+
 let radius = 1;
 let camera;
 
+let defaultModel;
+
+let textures;
 let scene = [];
 
 /** @type {WebGLRenderingContext} */
 window.addEventListener("load", async function () {
     mat4 = importMat4();
+
     gl = document.getElementById("glcanvas").getContext("webgl2");
     twgl.resizeCanvasToDisplaySize(gl.canvas);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+    gl.enable(gl.CULL_FACE);
     gl.enable(gl.DEPTH_TEST);
     gl.clearColor(0.3, 0.4, 0.5, 1);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    const textures = twgl.createTextures(gl, {
+    aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+    projectionMatrix = m4.perspective(fov, aspect, near, far);
+
+    textures = twgl.createTextures(gl, {
+        default: {
+            src: 'assets/default/defaultTexture.jpg',
+            flipY: true
+        },
         rayman: {
             src: 'assets/rayman/Rayman.png',
             flipY: true
@@ -55,30 +68,36 @@ window.addEventListener("load", async function () {
     cubemap = textures.environment;
 
     const models = {
-        rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj'))
+        rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj')),
+        boy: createSCs(await loadOBJ('assets/boy/BoyOBJ.obj')),
     };
 
+    defaultModel = {}
     // Example Game Objects
-    rayman = new GameObject(
-        models.rayman,
-        textures.rayman,
-        raymanShaders,
-        raymanScript
-    );
+    rayman = new GameObject({
+        model: models.rayman,
+        texture: textures.rayman,
+        shaders: raymanShaders,
+        script: raymanScript
+    });
 
-    rayman2 = new GameObject(
-        models.rayman,
-        textures.rayman,
-        raymanShaders,
-        raymanScript
-    );
+    boy = new GameObject({
+        model: models.boy,
+    });
 
-    // Example movement
-    rayman.translate([-5, 0, 0]);
-    rayman2.rotate({ z: -45 });
+    // Example transforms
+    rayman.translate([0, 0, 0]);
+    rayman.rotate({z: 30});
+    rayman.scale(2);
+
+    boy.rotate({z: -45});
+    boy.translate([5, 0, 0]);
+
+
+    // house.scale(0.5);
 
     camera = {
-        position: [0, 10, 30],
+        position: [0, 0, 0],
         lookAt: [0, 0, 0],
     }
 
@@ -115,7 +134,6 @@ window.addEventListener("load", async function () {
     skyboxProgramInfo = twgl.createProgramInfo(gl, [sbvs, sbfs]);
 
     // start render loop
-    // gameLoop = new RenderLoop(onRender).start();
     gameLoop = new GameLoop(onRender).start();
 });
 
@@ -126,7 +144,7 @@ renderScene = (viewMatrix, projectionMatrix, o) => {
     const eyePosition = camera.position;
     const uniforms = ({
         eyePosition,
-        modelMatrix: o.getModelMatrix(),
+        modelMatrix: o.modelMatrix,
         viewMatrix: viewMatrix,
         projectionMatrix: projectionMatrix,
         tex: o.texture,
@@ -163,7 +181,8 @@ renderSkybox = (skyboxProgramInfo, viewMatrix, projectionMatrix) => {
     gl.depthFunc(gl.LESS);
 }
 
-getViewMatrix = (r, x_angle, y_angle, object) => {
+// Might be able to remove most of this
+updateViewMatrix = () => {
     // const gazeDirection = m4.transformDirection(
     //     m4.multiply(m4.rotationY(y_angle), m4.rotationX(x_angle)),
     //     [0, 0, 1]
@@ -171,46 +190,29 @@ getViewMatrix = (r, x_angle, y_angle, object) => {
     // const eye = v3.add(camera.lookAt, v3.mulScalar(gazeDirection, r * object.modelDim.dia));
     // const eye = v3.add(camera.lookAt, camera.position);
     const cameraMatrix = m4.lookAt(camera.position, camera.lookAt, [0, 1, 0]);
-    return m4.inverse(cameraMatrix);
-}
-
-getProjectionMatrix = (fov, near, far, object) => {
-    return m4.perspective(
-        deg2rad(fov),
-        aspect,
-        near * object.modelDim.dia,
-        far * object.modelDim.dia
-    );
+    viewMatrix = m4.inverse(cameraMatrix);
 }
 
 // Main Loop, called every frame
 onRender = () => {
+    aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    camera.position = [10*Math.sin(time), 10, 30];
+    camera.position = [Math.sin(time), 1, 5];
+    updateViewMatrix();
 
     // Render every game object and run its update function
     scene.forEach(o => {
         o.update();
         renderScene(
-            getViewMatrix(
-                radius,
-                deg2rad(cameraAngles.x_angle),
-                deg2rad(cameraAngles.y_angle),
-                o
-            ),
-            getProjectionMatrix(fov_Y, near, far, o),
+            viewMatrix,
+            projectionMatrix,
             o
         );
     });
 
     renderSkybox(
         skyboxProgramInfo,
-        getViewMatrix(
-            radius,
-            deg2rad(cameraAngles.x_angle),
-            deg2rad(cameraAngles.y_angle),
-            rayman
-        ),
-        getProjectionMatrix(fov_Y, near, far, rayman)
+        viewMatrix,
+        projectionMatrix
     );
 }

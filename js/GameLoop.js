@@ -15,7 +15,7 @@ class GameLoop {
 		dt = dt < 1 ? dt : 1;
 		time += dt;
 		fps = Math.floor(1 / dt);
-		console.log(fps);
+		// console.log(fps);
 
 		this.callback();
 		this.last = now;

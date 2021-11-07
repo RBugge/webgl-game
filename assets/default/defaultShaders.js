@@ -1,4 +1,13 @@
-raymanShaders = {
+/*
+----------------------------------------------------------------------------------
+Shaders should follow this template
+
+Each one needs a unique name
+
+Shaders are attached in the GameObject Constructor
+----------------------------------------------------------------------------------
+*/
+defaultShaders = {
     vs: `#version 300 es
         precision mediump float;
 
