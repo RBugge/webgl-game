@@ -1,12 +1,3 @@
-/*
-----------------------------------------------------------------------------------
-Shaders should follow this template
-
-Each one needs a unique name
-
-Shaders are attached in the GameObject Constructor
-----------------------------------------------------------------------------------
-*/
 raymanShaders = {
     vs: `#version 300 es
         precision mediump float;
@@ -53,7 +44,7 @@ raymanShaders = {
 
             vec3 texColor = texture( tex, fragUV ).rgb;
             vec3 envColor = texture( cubeMapTex, R ).rgb;
-            outColor = vec4(mapping == 1 ? texColor : envColor, 1);
+            outColor = vec4(mapping == 0 ? texColor : envColor, 1);
             // outColor = vec4(abs(N), 1);
         }`
 }

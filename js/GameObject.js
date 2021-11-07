@@ -29,6 +29,7 @@ class GameObject {
 
         // Recompute model extents
         this.modelDim = computeModelExtent(this.model);
+        this.setModelMatrix();
 
         this.vertexAttributes = this.model.map((d) => ({
             position: { numComponents: 3, data: d.sc.positions },

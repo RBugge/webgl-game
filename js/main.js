@@ -20,7 +20,10 @@ let projectionMatrix;
 let viewMatrix;
 
 let radius = 1;
-let camera;
+let camera = {
+    position: [0, 0, 0],
+    lookAt: [0, 0, 0]
+};
 
 let defaultModel;
 
@@ -45,7 +48,7 @@ window.addEventListener("load", async function () {
     textures = twgl.createTextures(gl, {
         default: {
             src: 'assets/default/defaultTexture.jpg',
-            flipY: true
+            flipY: true,
         },
         rayman: {
             src: 'assets/rayman/Rayman.png',
@@ -68,11 +71,12 @@ window.addEventListener("load", async function () {
     cubemap = textures.environment;
 
     const models = {
+        sphere: createSCs(await loadOBJ('assets/default/sphere.obj')),
+        cube: createSCs(await loadOBJ('assets/default/cube.obj')),
         rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj')),
         boy: createSCs(await loadOBJ('assets/boy/BoyOBJ.obj')),
     };
 
-    defaultModel = {}
     // Example Game Objects
     rayman = new GameObject({
         model: models.rayman,
@@ -85,64 +89,37 @@ window.addEventListener("load", async function () {
         model: models.boy,
     });
 
-    // Example transforms
-    rayman.translate([0, 0, 0]);
-    rayman.rotate({z: 30});
-    rayman.scale(2);
+    cube = new GameObject({
+        model: models.cube,
+    });
 
-    boy.rotate({z: 90});
-    boy.translate([2, 0, 0]);
-
-    // house.scale(0.5);
-
-    camera = {
-        position: [0, 0, 0],
-        lookAt: [0, 0, 0],
-    }
-
-    // Skybox stuff, should be separated from main
-    quadBufferInfo = twgl.createBufferInfoFromArrays(gl, {
-        position: {
-            numComponents: 2,
-            data: [-1, -1, 1, -1, 1, 1, 1, 1, -1, 1, -1, -1]
-        }
+    sphere = new GameObject({
+        model: models.sphere,
     })
 
-    let sbvs = `#version 300 es
-        precision mediump float;
-        in vec2 position;
-        out vec2 fragPosition;
-        void main() {
-            fragPosition = position;
-            gl_Position = vec4(position, 1, 1);
-        }`;
-    let sbfs = `#version 300 es
-        precision mediump float;
-        uniform samplerCube cubemap;
-        in vec2 fragPosition;
-        out vec4 outColor;
-        uniform mat4 invViewProjectionMatrix;
-        uniform vec3 eyePosition;
+    // Example transformations
+    rayman.translate([0, 0, 0]);
+    rayman.rotate({ z: 30 });
+    rayman.scale(2);
 
-        void main () {
-            vec4 farPlanePosition = invViewProjectionMatrix*vec4(fragPosition, 1, 1);
-            vec3 direction = farPlanePosition.xyz/farPlanePosition.w - eyePosition;
+    boy.rotate({ y: 90 });
+    boy.translate([0, 2, 0]);
 
-            outColor = texture(cubemap, normalize(direction));
-        }`;
-    skyboxProgramInfo = twgl.createProgramInfo(gl, [sbvs, sbfs]);
+    cube.translate([-5, 0, 0]);
+    sphere.translate([5, 0, 0]);
+
+    initSkybox();
 
     // start render loop
     gameLoop = new GameLoop(onRender).start();
 });
 
+// TODO: Move uniforms that can be separated to GameObject
 renderScene = (viewMatrix, projectionMatrix, o) => {
-    let programInfo = o.programInfo;
-    gl.useProgram(programInfo.program);
+    gl.useProgram(o.programInfo.program);
     // const eyePosition = m4.inverse(viewMatrix).slice(12, 15);
-    const eyePosition = camera.position;
     const uniforms = ({
-        eyePosition,
+        eyePosition: camera.position,
         modelMatrix: o.modelMatrix,
         viewMatrix: viewMatrix,
         projectionMatrix: projectionMatrix,
@@ -150,9 +127,10 @@ renderScene = (viewMatrix, projectionMatrix, o) => {
         cubeMapTex: cubemap,
         mapping: 1
     })
-    twgl.setUniforms(programInfo, uniforms);
+    twgl.setUniforms(o.programInfo, uniforms);
+
     o.bufferInfoArray.forEach((bufferInfo) => {
-        twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
+        twgl.setBuffersAndAttributes(gl, o.programInfo, bufferInfo);
         twgl.drawBufferInfo(gl, bufferInfo);
     });
 }
