@@ -17,6 +17,7 @@ class defaultScript {
     constructor(oThis) {
         this.oThis = oThis;
     }
+
     start = () => {
 
     }
@@ -24,4 +25,26 @@ class defaultScript {
     update = () => {
 
     }
+
+    render = defaultRender;
+}
+
+defaultRender = (o) => {
+    gl.useProgram(o.programInfo.program);
+    // const eyePosition = m4.inverse(viewMatrix).slice(12, 15);
+    const uniforms = ({
+        eyePosition: camera.position,
+        modelMatrix: o.modelMatrix,
+        viewMatrix: viewMatrix,
+        projectionMatrix: projectionMatrix,
+        tex: o.texture,
+        cubeMapTex: cubemap,
+        mapping: 1
+    })
+    twgl.setUniforms(o.programInfo, uniforms);
+
+    o.bufferInfoArray.forEach((bufferInfo) => {
+        twgl.setBuffersAndAttributes(gl, o.programInfo, bufferInfo);
+        twgl.drawBufferInfo(gl, bufferInfo);
+    });
 }

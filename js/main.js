@@ -30,11 +30,18 @@ let defaultModel;
 let textures;
 let scene = [];
 
+let canvas;
+
 /** @type {WebGLRenderingContext} */
 window.addEventListener("load", async function () {
     mat4 = importMat4();
 
-    gl = document.getElementById("glcanvas").getContext("webgl2");
+    // Get canvas element and initialize input event handlers
+    canvas = document.getElementById("glcanvas");
+    initInput();
+
+
+    gl = canvas.getContext("webgl2");
     twgl.resizeCanvasToDisplaySize(gl.canvas);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.enable(gl.CULL_FACE);
@@ -75,6 +82,7 @@ window.addEventListener("load", async function () {
         cube: createSCs(await loadOBJ('assets/default/cube.obj')),
         rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj')),
         boy: createSCs(await loadOBJ('assets/boy/BoyOBJ.obj')),
+        revolver: createSCs(await loadOBJ('assets/revolver/revolver_light.obj')),
     };
 
     // Example Game Objects
@@ -97,6 +105,12 @@ window.addEventListener("load", async function () {
         model: models.sphere,
     })
 
+    // revolver = new GameObject({
+    //     model: models.revolver,
+    // })
+
+    // revolver.rotate({y: 70})
+
     // Example transformations
     rayman.translate([0, 0, 0]);
     rayman.rotate({ z: 30 });
@@ -115,27 +129,11 @@ window.addEventListener("load", async function () {
 });
 
 // TODO: Move uniforms that can be separated to GameObject
-renderScene = (viewMatrix, projectionMatrix, o) => {
-    gl.useProgram(o.programInfo.program);
-    // const eyePosition = m4.inverse(viewMatrix).slice(12, 15);
-    const uniforms = ({
-        eyePosition: camera.position,
-        modelMatrix: o.modelMatrix,
-        viewMatrix: viewMatrix,
-        projectionMatrix: projectionMatrix,
-        tex: o.texture,
-        cubeMapTex: cubemap,
-        mapping: 1
-    })
-    twgl.setUniforms(o.programInfo, uniforms);
+// renderScene = (o) => {
 
-    o.bufferInfoArray.forEach((bufferInfo) => {
-        twgl.setBuffersAndAttributes(gl, o.programInfo, bufferInfo);
-        twgl.drawBufferInfo(gl, bufferInfo);
-    });
-}
+// }
 
-renderSkybox = (skyboxProgramInfo, viewMatrix, projectionMatrix) => {
+renderSkybox = (skyboxProgramInfo) => {
     const invViewMatrix = m4.inverse(viewMatrix);
     const invProjectionMatrix = m4.inverse(projectionMatrix);
     const invViewProjectionMatrix = m4.multiply(
@@ -172,24 +170,20 @@ updateViewMatrix = () => {
 
 // Main Loop, called every frame
 onRender = () => {
+    twgl.resizeCanvasToDisplaySize(gl.canvas);
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    projectionMatrix = m4.perspective(fov, aspect, near, far);
     camera.position = [Math.sin(time), 1, 5];
     updateViewMatrix();
+    // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     // Render every game object and run its update function
     scene.forEach(o => {
-        o.update();
-        renderScene(
-            viewMatrix,
-            projectionMatrix,
-            o
-        );
+        if (o.update) o.update();
+        if (o.render) o.render(o);
     });
 
-    renderSkybox(
-        skyboxProgramInfo,
-        viewMatrix,
-        projectionMatrix
-    );
+    renderSkybox(skyboxProgramInfo,);
 }

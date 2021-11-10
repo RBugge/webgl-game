@@ -5,9 +5,11 @@ class GameObject {
         this.model = params.model;
         this.texture = params.texture ? params.texture : textures.default;
         this.shaders = params.shaders ? params.shaders : defaultShaders;
+        this.collider = params.collider;
 
         this.script = params.script ? new params.script(this) : new defaultScript(this);
         this.update = this.script.update;
+        this.render = this.script.render ? this.script.render : defaultRender;
 
         // Initialize model variables
         this.modelDim = computeModelExtent(this.model);
@@ -44,7 +46,7 @@ class GameObject {
 
         // Add to scene and run object's start script
         scene.push(this);
-        this.script.start;
+        if(this.script.start) this.script.start;
     }
 
     // Model transformation here

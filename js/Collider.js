@@ -1,0 +1,5 @@
+class Collider {
+    constructor(params) {
+
+    }
+}
