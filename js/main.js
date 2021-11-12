@@ -112,12 +112,13 @@ window.addEventListener("load", async function () {
     // revolver.rotate({y: 70})
 
     // Example transformations
-    rayman.translate([0, 0, 0]);
-    rayman.rotate({ z: 30 });
+    // rayman.translate([0, 0, 0]);
+    // rayman.rotate({ z: 30 });
     rayman.scale(2);
 
     boy.rotate({ y: 90 });
     boy.translate([0, 2, 0]);
+    // boy.scale(3);
 
     cube.translate([-5, 0, 0]);
     sphere.translate([5, 0, 0]);
@@ -175,7 +176,7 @@ onRender = () => {
     aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
 
     projectionMatrix = m4.perspective(fov, aspect, near, far);
-    camera.position = [Math.sin(time), 1, 5];
+    camera.position = [Math.sin(time), 1, 15];
     updateViewMatrix();
     // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 

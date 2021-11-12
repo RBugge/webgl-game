@@ -10,6 +10,7 @@ class GameObject {
         this.script = params.script ? new params.script(this) : new defaultScript(this);
         this.update = this.script.update;
         this.render = this.script.render ? this.script.render : defaultRender;
+        if (this.collider) this.collider.callback = this.script.onCollision;
 
         // Initialize model variables
         this.modelDim = computeModelExtent(this.model);
@@ -21,6 +22,7 @@ class GameObject {
         this.transform.Rotation = { x: 0, y: 0, z: 0 };
         this.transform.Translation = [0, 0, 0];
         this.transform.Scale = { x: 1, y: 1, z: 1 };
+        this.worldTranslation = [0, 0, 0];
 
         // Center Objects
         for (let i = 0; i < this.model.length; i++) {
@@ -46,7 +48,7 @@ class GameObject {
 
         // Add to scene and run object's start script
         scene.push(this);
-        if(this.script.start) this.script.start;
+        if (this.script.start) this.script.start;
     }
 
     // Model transformation here
@@ -79,6 +81,9 @@ class GameObject {
         ]);
 
         this.modelMatrix = m4.multiply(m4.multiply(m4.multiply(m4.multiply(S, R_z), R_y), R_x), T);
+        this.modelMatrix[12] += this.worldTranslation[0];
+        this.modelMatrix[13] += this.worldTranslation[1];
+        this.modelMatrix[14] += this.worldTranslation[2];
 
         // Jankiness to store position with fixed number of decimals to avoid float errors
         let temp = [];
@@ -88,9 +93,17 @@ class GameObject {
         this.position = temp;
     }
 
-    // Accumulate translations
-    translate = (vector) => {
-        this.transform.Translation = v3.add(this.transform.Translation, vector);
+    // Accumulate translations, set world to true to translate in world space
+    translate = (vector, world) => {
+        (world == true) ? this.worldTranslation = v3.add(this.worldTranslation, vector)
+            : this.transform.Translation = v3.add(this.transform.Translation, vector);
+        this.setModelMatrix();
+    }
+
+    // Sets the position in world space and removes any previous translations
+    setPosition = (position) => {
+        this.worldTranslation = position;
+        this.transform.translation = [0, 0, 0];
         this.setModelMatrix();
     }
 

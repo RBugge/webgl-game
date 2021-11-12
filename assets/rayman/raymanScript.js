@@ -7,6 +7,7 @@ class raymanScript {
     }
 
     update = () => {
-        this.oThis.rotate({y: 1});
+        // this.oThis.rotate({y: 1});
+        this.oThis.setPosition([Math.sin(time)*2, 0, 0]);
     }
 }
