@@ -1,5 +1,9 @@
 deg2rad = (deg) => (Math.PI * deg) / 180;
 
+clamp = (num, min, max) => {
+    return (num <= min) ? min : (num >= max) ? max : num;
+}
+
 function importMat4() {
     const M4 = twgl.m4;
     M4.create = () =>

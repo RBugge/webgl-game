@@ -20,10 +20,10 @@ let projectionMatrix;
 let viewMatrix;
 
 let radius = 1;
-let camera = {
-    position: [0, 0, 0],
-    lookAt: [0, 0, 0]
-};
+// let camera = {
+//     position: [0, 0, 0],
+//     lookAt: [0, 0, -1]
+// };
 
 let defaultModel;
 
@@ -44,7 +44,6 @@ window.addEventListener("load", async function () {
     gl = canvas.getContext("webgl2");
     twgl.resizeCanvasToDisplaySize(gl.canvas);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    gl.enable(gl.CULL_FACE);
     gl.enable(gl.DEPTH_TEST);
     gl.clearColor(0.3, 0.4, 0.5, 1);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -85,58 +84,57 @@ window.addEventListener("load", async function () {
         revolver: createSCs(await loadOBJ('assets/revolver/revolver_light.obj')),
     };
 
+    // Player Object with camera attached
+    // Set render to false so no model shows. Models can be added for debugging purposes
+    lookAt = new GameObject({
+        model: models.cube,
+        render: false
+    });
+    camera = new GameObject({
+        script: cameraScript,
+        render: false,
+    });
+    camera.addChild(lookAt);
+    camera.setPosition([0, 0, 15]);
+    lookAt.translate([0, 0, -5]);
+
+
     // Example Game Objects
     rayman = new GameObject({
         model: models.rayman,
         texture: textures.rayman,
         shaders: raymanShaders,
         script: raymanScript,
-        render: true,
     });
 
     boy = new GameObject({
         model: models.boy,
-        render: true,
     });
 
     cube = new GameObject({
         model: models.cube,
-        render: true,
     });
 
     sphere = new GameObject({
         model: models.sphere,
-        render: true,
     })
-
-    player = new GameObject({
-        model: models.sphere,
-        script: playerScript,
-    })
-
-
-    player.setPosition([0, 0, 15]);
-// camera.position =
-
-    // revolver = new GameObject({
-    //     model: models.revolver,
-    // })
-
-    // revolver.rotate({y: 70})
 
     // Example transformations
-    // rayman.translate([0, 0, 0]);
-    // rayman.rotate({ z: 30 });
+
+    // Can create empty objects to be used as containers
+    // Container objects are useful for positioning child objects in local space
+    boyContainer = new GameObject();
+    boyContainer.addChild(boy);
+    boyContainer.rotate({ z: 45 })
+
     rayman.scale(2);
-    rayman.translate([2,4,0], true);
-    rayman.translate([-2,-6,0], true);
+    rayman.addChild(boyContainer);
 
-    boy.rotate({ y: 90 });
-    boy.translate([0, 2, 0]);
-    // boy.scale(3);
+    boyContainer.translate([0, 0, -2]);
+    rayman.translate([4, 0, 0], false);
+    rayman.rotate({ z: 45 })
 
-    cube.translate([-5, 0, 0]);
-    sphere.translate([5, 0, 0]);
+    cube.translate([0, -5, 0], false);
 
     initSkybox();
 
@@ -167,28 +165,21 @@ renderSkybox = (skyboxProgramInfo) => {
     gl.depthFunc(gl.LESS);
 }
 
-// Might be able to remove most of this
 updateViewMatrix = () => {
-    // const gazeDirection = m4.transformDirection(
-    //     m4.multiply(m4.rotationY(y_angle), m4.rotationX(x_angle)),
-    //     [0, 0, 1]
-    // );
-    // const eye = v3.add(camera.lookAt, v3.mulScalar(gazeDirection, r * object.modelDim.dia));
-    // const eye = v3.add(camera.lookAt, camera.position);
-    const cameraMatrix = m4.lookAt(camera.position, camera.lookAt, [0, 1, 0]);
+    const cameraMatrix = m4.lookAt(camera.position, lookAt.position, [0, 1, 0]);
     viewMatrix = m4.inverse(cameraMatrix);
 }
 
 // Main Loop, called every frame
 onRender = () => {
+    // Update gl canvas and aspect ratio when resizing window
     twgl.resizeCanvasToDisplaySize(gl.canvas);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
 
+    // Update projectionMatrix and viewMatrix each frame
     projectionMatrix = m4.perspective(fov, aspect, near, far);
-    // player.translate({z:0.1});
     updateViewMatrix();
-    // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     // Render every game object and run its update function
     scene.forEach(o => {

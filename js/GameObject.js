@@ -1,32 +1,36 @@
-const translationScale = 5;
+// const translationScale = 2;
 const modelScale = 2;
 class GameObject {
+    children = [];
+
+    // Initialize transform/model
+    transform = {
+        Rotation: { x: 0, y: 0, z: 0 },
+        Translation: [0, 0, 0],
+        Scale: { x: 1, y: 1, z: 1 },
+    }
+    worldTranslation = [0, 0, 0];
+    position = [0, 0, 0];
+    modelMatrix = m4.identity();
+    modelDim = { dia: 1 };
+
     constructor(params) {
-        this.model = params.model;
-        this.texture = params.texture ? params.texture : textures.default;
-        this.shaders = params.shaders ? params.shaders : defaultShaders;
-        this.collider = params.collider;
+        if (params) {
+            this.model = params.model;
+            this.texture = params.texture ? params.texture : textures.default;
+            this.shaders = params.shaders ? params.shaders : defaultShaders;
+            this.collider = params.collider;
 
-        this.script = params.script ? new params.script(this) : new defaultScript(this);
-        this.update = this.script.update;
+            this.script = params.script ? new params.script(this) : new defaultScript(this);
+            this.update = this.script.update;
 
-        if (params.render)
-            this.render = this.script.render ? this.script.render : defaultRender;
-        if (this.collider) this.collider.callback = this.script.onCollision;
-
-            // Initialize transform
-            this.transform = {};
-            this.transform.Rotation = { x: 0, y: 0, z: 0 };
-            this.transform.Translation = [0, 0, 0];
-            this.transform.Scale = { x: 1, y: 1, z: 1 };
-            this.worldTranslation = [0, 0, 0];
-            this.position = [0, 0, 0];
-            this.modelMatrix = m4.identity();
-            this.modelDim = {};
-            this.modelDim.dia = 1;
+            if (params.render || (params.render === undefined))
+                this.render = this.script.render ? this.script.render : defaultRender;
+            if (this.collider)
+                this.collider.callback = this.script.onCollision;
+        }
 
         if (this.model) {
-            // Initialize model variables
             this.modelDim = computeModelExtent(this.model);
 
             // Center Objects
@@ -54,15 +58,14 @@ class GameObject {
 
         // Add to scene and run object's start script
         scene.push(this);
-        if (this.script.start) this.script.start;
+        if (params) {
+            this.script.start();
+        }
     }
 
-    // Model transformation here
+    // Apply model transformations
     // See https://observablehq.com/@spattana/cap4720-2021-assignment4
-    // TODO:    1. Update object position
-    //          2. Add translation in world space
     setModelMatrix = () => {
-
         // Uniform translation in world space
         let T = m4.translation(
             v3.multiply(
@@ -72,7 +75,7 @@ class GameObject {
                     this.transform.Scale.y,
                     this.transform.Scale.z]
                 ),
-                Array(3).fill(this.modelDim.dia / translationScale)
+                Array(3).fill(this.modelDim.dia / 2)
             )
         );
 
@@ -86,6 +89,7 @@ class GameObject {
             modelScale / this.modelDim.dia * this.transform.Scale.z
         ]);
 
+        // Add world translation
         this.modelMatrix = m4.multiply(m4.multiply(m4.multiply(m4.multiply(S, R_z), R_y), R_x), T);
         this.modelMatrix[12] += this.worldTranslation[0];
         this.modelMatrix[13] += this.worldTranslation[1];
@@ -104,12 +108,15 @@ class GameObject {
         (world == true) ? this.worldTranslation = v3.add(this.worldTranslation, vector)
             : this.transform.Translation = v3.add(this.transform.Translation, vector);
         this.setModelMatrix();
+        this.children.forEach(child => child.setPosition(this.position, true));
     }
 
     // Sets the position in world space and removes any previous translations
-    setPosition = (position) => {
+    setPosition = (position, isChild) => {
+        let diff = v3.subtract(position, this.position);
+        this.children.forEach(child => child.setPosition(position, true));
         this.worldTranslation = position;
-        this.transform.translation = [0, 0, 0];
+        if (!isChild) this.transform.translation = [0, 0, 0];
         this.setModelMatrix();
     }
 
@@ -119,6 +126,10 @@ class GameObject {
         if (rot.y) this.transform.Rotation.y += deg2rad(rot.y);
         if (rot.z) this.transform.Rotation.z += deg2rad(rot.z);
         this.setModelMatrix();
+        this.children.forEach(child => {
+            child.setPosition(this.position, true);
+            child.rotate(rot)
+        });
     }
 
     // Set scale
@@ -129,5 +140,11 @@ class GameObject {
         if (scale.y) this.transform.Scale.y = scale.y;
         if (scale.z) this.transform.Scale.z = scale.z;
         this.setModelMatrix();
+        this.children.forEach(child => child.scale(scale));
+    }
+
+    addChild = (child) => {
+        this.children.push(child);
+        child.parent = this;
     }
 }
