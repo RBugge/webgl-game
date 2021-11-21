@@ -9,42 +9,48 @@ class GameObject {
 
         this.script = params.script ? new params.script(this) : new defaultScript(this);
         this.update = this.script.update;
-        this.render = this.script.render ? this.script.render : defaultRender;
+
+        if (params.render)
+            this.render = this.script.render ? this.script.render : defaultRender;
         if (this.collider) this.collider.callback = this.script.onCollision;
 
-        // Initialize model variables
-        this.modelDim = computeModelExtent(this.model);
-        this.position = [0, 0, 0];
-        this.modelMatrix = m4.identity();
+            // Initialize transform
+            this.transform = {};
+            this.transform.Rotation = { x: 0, y: 0, z: 0 };
+            this.transform.Translation = [0, 0, 0];
+            this.transform.Scale = { x: 1, y: 1, z: 1 };
+            this.worldTranslation = [0, 0, 0];
+            this.position = [0, 0, 0];
+            this.modelMatrix = m4.identity();
+            this.modelDim = {};
+            this.modelDim.dia = 1;
 
-        // Initialize transform
-        this.transform = {};
-        this.transform.Rotation = { x: 0, y: 0, z: 0 };
-        this.transform.Translation = [0, 0, 0];
-        this.transform.Scale = { x: 1, y: 1, z: 1 };
-        this.worldTranslation = [0, 0, 0];
+        if (this.model) {
+            // Initialize model variables
+            this.modelDim = computeModelExtent(this.model);
 
-        // Center Objects
-        for (let i = 0; i < this.model.length; i++) {
-            for (let j = 0; j < this.model[i].sc.positions.length; j++) {
-                this.model[i].sc.positions[j] -= this.modelDim.center[j % 3];
+            // Center Objects
+            for (let i = 0; i < this.model.length; i++) {
+                for (let j = 0; j < this.model[i].sc.positions.length; j++) {
+                    this.model[i].sc.positions[j] -= this.modelDim.center[j % 3];
+                }
             }
+
+            // Recompute model extents
+            this.modelDim = computeModelExtent(this.model);
+            this.setModelMatrix();
+
+            this.vertexAttributes = this.model.map((d) => ({
+                position: { numComponents: 3, data: d.sc.positions },
+                normal: { numComponents: 3, data: d.sc.normals },
+                uv: { numComponents: 2, data: d.sc.uvs },
+            }));
+
+            this.bufferInfoArray = this.vertexAttributes.map((vertexAttributes) =>
+                twgl.createBufferInfoFromArrays(gl, vertexAttributes)
+            );
+            this.programInfo = twgl.createProgramInfo(gl, [this.shaders.vs, this.shaders.fs]);
         }
-
-        // Recompute model extents
-        this.modelDim = computeModelExtent(this.model);
-        this.setModelMatrix();
-
-        this.vertexAttributes = this.model.map((d) => ({
-            position: { numComponents: 3, data: d.sc.positions },
-            normal: { numComponents: 3, data: d.sc.normals },
-            uv: { numComponents: 2, data: d.sc.uvs },
-        }));
-
-        this.bufferInfoArray = this.vertexAttributes.map((vertexAttributes) =>
-            twgl.createBufferInfoFromArrays(gl, vertexAttributes)
-        );
-        this.programInfo = twgl.createProgramInfo(gl, [this.shaders.vs, this.shaders.fs]);
 
         // Add to scene and run object's start script
         scene.push(this);

@@ -38,7 +38,7 @@ lockChangeAlert = () => {
 }
 
 updatePosition = (e) => {
-    console.log(e.movementX);
+    // console.log(e.movementX);
 }
 
 onKeyDown = (e) => {
@@ -47,8 +47,8 @@ onKeyDown = (e) => {
     if(keyCode == 65) Input.a = true;
     if(keyCode == 83) Input.s = true;
     if(keyCode == 68) Input.d = true;
-    console.clear();
-    console.log(Input);
+    // console.clear();
+    // console.log(Input);
 }
 
 onKeyUp = (e) => {
@@ -57,20 +57,20 @@ onKeyUp = (e) => {
     if(keyCode == 65) Input.a = false;
     if(keyCode == 83) Input.s = false;
     if(keyCode == 68) Input.d = false;
-    console.clear();
-    console.log(Input);
+    // console.clear();
+    // console.log(Input);
 }
 
 onMouseDown = (e) => {
     if(e.which === 1) Input.left = true;
     if(e.which === 3) Input.right = true;
-    console.clear();
-    console.log(Input);
+    // console.clear();
+    // console.log(Input);
 }
 
 onMouseUp = (e) => {
     if(e.which === 1) Input.left = false;
     if(e.which === 3) Input.right = false;
-    console.clear();
-    console.log(Input);
+    // console.clear();
+    // console.log(Input);
 }

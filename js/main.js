@@ -90,20 +90,33 @@ window.addEventListener("load", async function () {
         model: models.rayman,
         texture: textures.rayman,
         shaders: raymanShaders,
-        script: raymanScript
+        script: raymanScript,
+        render: true,
     });
 
     boy = new GameObject({
         model: models.boy,
+        render: true,
     });
 
     cube = new GameObject({
         model: models.cube,
+        render: true,
     });
 
     sphere = new GameObject({
         model: models.sphere,
+        render: true,
     })
+
+    player = new GameObject({
+        model: models.sphere,
+        script: playerScript,
+    })
+
+
+    player.setPosition([0, 0, 15]);
+// camera.position =
 
     // revolver = new GameObject({
     //     model: models.revolver,
@@ -115,6 +128,8 @@ window.addEventListener("load", async function () {
     // rayman.translate([0, 0, 0]);
     // rayman.rotate({ z: 30 });
     rayman.scale(2);
+    rayman.translate([2,4,0], true);
+    rayman.translate([-2,-6,0], true);
 
     boy.rotate({ y: 90 });
     boy.translate([0, 2, 0]);
@@ -128,11 +143,6 @@ window.addEventListener("load", async function () {
     // start render loop
     gameLoop = new GameLoop(onRender).start();
 });
-
-// TODO: Move uniforms that can be separated to GameObject
-// renderScene = (o) => {
-
-// }
 
 renderSkybox = (skyboxProgramInfo) => {
     const invViewMatrix = m4.inverse(viewMatrix);
@@ -176,7 +186,7 @@ onRender = () => {
     aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
 
     projectionMatrix = m4.perspective(fov, aspect, near, far);
-    camera.position = [Math.sin(time), 1, 15];
+    // player.translate({z:0.1});
     updateViewMatrix();
     // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
