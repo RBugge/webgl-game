@@ -12,6 +12,8 @@ let cameraAngles = {
     y_angle: 180,
     x_angle: -60,
 };
+let forward;
+let right;
 
 let near = 0.01;
 let far = 2000;
@@ -40,7 +42,7 @@ window.addEventListener("load", async function () {
     canvas = document.getElementById("glcanvas");
     initInput();
 
-
+    // Initialize webgl canvas
     gl = canvas.getContext("webgl2");
     twgl.resizeCanvasToDisplaySize(gl.canvas);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -51,6 +53,9 @@ window.addEventListener("load", async function () {
     aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     projectionMatrix = m4.perspective(fov, aspect, near, far);
 
+
+
+    // Load textures here
     textures = twgl.createTextures(gl, {
         default: {
             src: 'assets/default/defaultTexture.jpg',
@@ -75,7 +80,9 @@ window.addEventListener("load", async function () {
         }
     });
     cubemap = textures.environment;
+    initSkybox();
 
+    // Load models here, only OBJs can be loaded currently
     const models = {
         sphere: createSCs(await loadOBJ('assets/default/sphere.obj')),
         cube: createSCs(await loadOBJ('assets/default/cube.obj')),
@@ -84,19 +91,42 @@ window.addEventListener("load", async function () {
         revolver: createSCs(await loadOBJ('assets/revolver/revolver_light.obj')),
     };
 
-    // Player Object with camera attached
+
+
+    // Camera object with lookAt as child
     // Set render to false so no model shows. Models can be added for debugging purposes
     lookAt = new GameObject({
         model: models.cube,
-        render: false
+        render: false,
     });
+    lookAt.translate([0, 0, -5]);
+
     camera = new GameObject({
         script: cameraScript,
         render: false,
     });
     camera.addChild(lookAt);
-    camera.setPosition([0, 0, 15]);
-    lookAt.translate([0, 0, -5]);
+
+
+
+    // Gun placeholder will need to adjust for gun model
+    gun = new GameObject({
+        model: models.cube,
+    });
+    gun.scale(0.05);
+    gun.translate([0.1, -0.1, -0.2]);
+    camera.addChild(gun);
+
+
+
+    // Player Object with camera attached
+    player = new GameObject({
+        script: playerScript,
+        render: false,
+    });
+    player.addChild(camera);
+    player.setPosition([0, 0, 15]);
+
 
 
     // Example Game Objects
@@ -109,10 +139,6 @@ window.addEventListener("load", async function () {
 
     boy = new GameObject({
         model: models.boy,
-    });
-
-    cube = new GameObject({
-        model: models.cube,
     });
 
     sphere = new GameObject({
@@ -133,10 +159,6 @@ window.addEventListener("load", async function () {
     boyContainer.translate([0, 0, -2]);
     rayman.translate([4, 0, 0], false);
     rayman.rotate({ z: 45 })
-
-    cube.translate([0, -5, 0], false);
-
-    initSkybox();
 
     // start render loop
     gameLoop = new GameLoop(onRender).start();
@@ -180,6 +202,12 @@ onRender = () => {
     // Update projectionMatrix and viewMatrix each frame
     projectionMatrix = m4.perspective(fov, aspect, near, far);
     updateViewMatrix();
+
+    // Update the forward and right vectors
+    forward = v3.subtract(lookAt.position, camera.position);
+    forward[1] = 0;
+    forward = v3.normalize(forward);
+    right = v3.cross(forward, [0, 1, 0]);
 
     // Render every game object and run its update function
     scene.forEach(o => {

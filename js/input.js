@@ -8,6 +8,7 @@ Input.left = false;
 Input.right = false;
 Input.movementX = 0;
 Input.movementY = 0;
+Input.updatePosition = () => {};
 
 initInput = () => {
     canvas.requestPointerLock = canvas.requestPointerLock ||
@@ -42,7 +43,6 @@ lockChangeAlert = () => {
 updatePosition = (e) => {
     Input.movementX = e.movementX;
     Input.movementY = e.movementY;
-
     camera.script.updateLookAt();
 }
 
