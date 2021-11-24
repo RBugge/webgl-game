@@ -18,7 +18,7 @@ class playerScript {
 
   update = () => {
     // Check ahead one frame. Am I falling and about to go under 1?
-    if (this.oThis.position[1] > 1 && this.jumping && this.velocity_y < 0) {
+    if (this.oThis.position[1] >= 1 && this.jumping && this.velocity_y < 0) {
       // expected delta x
       let dx = this.velocity_y * dt + 0.5 * this.g * dt * dt;
       // if that will put me under 1, put me at 1.
@@ -31,7 +31,7 @@ class playerScript {
       }
     }
 
-    // console.log(this.jumping);
+    // console.log(this.jumping, this.velocity_y < 0);
     // console.log(this.oThis.position[1]);
     // console.log(this.oThis.children[0].position[1]);
 
