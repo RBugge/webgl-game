@@ -89,7 +89,7 @@ window.addEventListener("load", async function () {
         rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj')),
         boy: createSCs(await loadOBJ('assets/boy/BoyOBJ.obj')),
         revolver: createSCs(await loadOBJ('assets/revolver/revolver_light.obj')),
-                
+
         // Testing the target spawn
         target: createSCs(await loadOBJ('assets/target/Target.obj'))
         // Testing the target spawn
@@ -172,9 +172,9 @@ window.addEventListener("load", async function () {
         .translate([-8, 0, 0], false);
 
     cloneContainer = new GameObject();
-    
+
     // Testing the target spawn
-    target1 = new GameObject( {
+    target1 = new GameObject({
         model: models.target
     })
         .setPosition([5, 5, 15]);
@@ -215,7 +215,7 @@ updateViewMatrix = () => {
 // Clone/destroy test
 let prevTime = 0;
 let count = 0;
-let rad = Math.PI/10
+let rad = Math.PI / 10
 
 // Main Loop, called every frame
 onRender = () => {
@@ -240,15 +240,12 @@ onRender = () => {
         if (o.render) o.render(o);
     });
 
-    // Clone/destroy test
-    // if (time - prevTime >= rad) {
-        count++;
-        // prevTime = time;
-        if (count <= 370) {
-            sphere.clone(cloneContainer).translate([2*Math.sin(time), 2*Math.cos(time), 0]);
-        } else if (cloneContainer.children.at(-1)) delete cloneContainer.children.at(-1).destroy();
-        else count = 0;
-    // }
+    // Clone/destroy testF
+    count++;
+    if (count <= 370) {
+        sphere.clone(cloneContainer).translate([2 * Math.sin(2 * time), 2 * Math.cos(2 * time), count * (13 / 370)]);
+    } else if (cloneContainer.children.at(-1)) delete cloneContainer.children.at(-1).destroy();
+    else count = 0;
 
     renderSkybox(skyboxProgramInfo,);
 }
