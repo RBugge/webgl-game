@@ -1,7 +1,7 @@
 import os
 import math
 
-BYTE_MAX = 1_000_000 # 10 MB
+BYTE_MAX = 10_000_000 # 10 MB
 # BYTE_MAX = 1_000_000 # 1 MB
 
 def get_iterations(bytes):

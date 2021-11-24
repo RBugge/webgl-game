@@ -17,16 +17,23 @@ class playerScript {
   start = () => {};
 
   update = () => {
-    if (this.oThis.position[1] < 1 && this.jumping) {
-      let x = this.oThis.position[0];
-      let z = this.oThis.position[2];
-      this.oThis.setPosition([x, 1, z]);
-      this.velocity_y = 0;
-      this.jumping = false;
+    // Check ahead one frame. Am I falling and about to go under 1?
+    if (this.oThis.position[1] > 1 && this.jumping && this.velocity_y < 0) {
+      // expected delta x
+      let dx = this.velocity_y * dt + 0.5 * this.g * dt * dt;
+      // if that will put me under 1, put me at 1.
+      if (this.oThis.position[1] + dx <= 1) {
+        let x = this.oThis.position[0];
+        let z = this.oThis.position[2];
+        this.oThis.setPosition([x, 1, z]);
+        this.velocity_y = 0;
+        this.jumping = false;
+      }
     }
 
-    console.log(this.oThis.position[1]);
-    console.log(this.oThis.children[0].position[1]);
+    // console.log(this.jumping);
+    // console.log(this.oThis.position[1]);
+    // console.log(this.oThis.children[0].position[1]);
 
     // Player movement
     if (Input.w)
