@@ -177,7 +177,8 @@ window.addEventListener("load", async function () {
     target1 = new GameObject( {
         model: models.target
     })
-        .setPosition([5, 5, 15]);
+        .rotate({z: 90})
+        .setPosition([5, 5, 30]);
     // Testing the target spawn
 
     // start render loop
