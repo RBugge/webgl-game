@@ -233,9 +233,9 @@ onRender = () => {
     // if (time - prevTime >= rad) {
         count++;
         // prevTime = time;
-        if (count <= 360) {
+        if (count <= 370) {
             sphere.clone(cloneContainer).translate([2*Math.sin(time), 2*Math.cos(time), 0]);
-        } else if (cloneContainer.children.at(-1)) cloneContainer.children.at(-1).destroy();
+        } else if (cloneContainer.children.at(-1)) delete cloneContainer.children.at(-1).destroy();
         else count = 0;
     // }
 
