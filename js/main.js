@@ -7,7 +7,7 @@ let m4 = twgl.m4;
 let mat4;
 const loader = new THREE.OBJLoader();
 
-let fov = 70;
+let fov = deg2rad(60);
 let cameraAngles = {
     y_angle: 180,
     x_angle: -60,
@@ -127,7 +127,7 @@ window.addEventListener("load", async function () {
         render: false,
     })
         .addChild(camera)
-        .setPosition([0, 0, 15]);
+        .setPosition([0, 1, 15]);
 
 
 
