@@ -177,8 +177,13 @@ window.addEventListener("load", async function () {
     target1 = new GameObject( {
         model: models.target
     })
-        .rotate({z: 90})
-        .setPosition([5, 5, 30]);
+        .rotate({x: 90})
+        .setPosition([5, 1, -15]);
+    /*
+        positive x will move target to the right, negative x to the left
+        positive y will move target to up, negative y down
+        positive z will move target behind player, negative in front
+     */
     // Testing the target spawn
 
     // start render loop
