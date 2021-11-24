@@ -98,23 +98,21 @@ window.addEventListener("load", async function () {
     lookAt = new GameObject({
         model: models.cube,
         render: false,
-    });
-    lookAt.translate([0, 0, -5]);
+    }).translate([0, 0, -5]);
 
     camera = new GameObject({
         script: cameraScript,
         render: false,
-    });
-    camera.addChild(lookAt);
+    }).addChild(lookAt);
 
 
 
     // Gun placeholder will need to adjust for gun model
     gun = new GameObject({
         model: models.cube,
-    });
-    gun.scale(0.05);
-    gun.translate([0.1, -0.1, -0.2]);
+    })
+        .scale(0.05)
+        .translate([0.1, -0.1, -0.2]);
     camera.addChild(gun);
 
 
@@ -123,9 +121,9 @@ window.addEventListener("load", async function () {
     player = new GameObject({
         script: playerScript,
         render: false,
-    });
-    player.addChild(camera);
-    player.setPosition([0, 0, 15]);
+    })
+        .addChild(camera)
+        .setPosition([0, 0, 15]);
 
 
 
@@ -149,16 +147,27 @@ window.addEventListener("load", async function () {
 
     // Can create empty objects to be used as containers
     // Container objects are useful for positioning child objects in local space
-    boyContainer = new GameObject();
-    boyContainer.addChild(boy);
-    boyContainer.rotate({ z: 45 })
+    boyContainer = new GameObject()
+        .addChild(boy)
+        .rotate({ z: 45 });
 
-    rayman.scale(2);
-    rayman.addChild(boyContainer);
+    rayman
+        .scale(2)
+        .addChild(boyContainer);
 
     boyContainer.translate([0, 0, -2]);
-    rayman.translate([4, 0, 0], false);
-    rayman.rotate({ z: 45 })
+    rayman
+        .translate([4, 0, 0], false)
+        .rotate({ z: 45 });
+
+    // Destroy objects like this
+    // delete sphere.destroy();
+
+    rayman
+        .clone()    // Returns the clone of the object
+        .translate([-8, 0, 0], false);
+
+    cloneContainer = new GameObject();
 
     // start render loop
     gameLoop = new GameLoop(onRender).start();
@@ -192,6 +201,10 @@ updateViewMatrix = () => {
     viewMatrix = m4.inverse(cameraMatrix);
 }
 
+// Clone/destroy test
+let prevTime = 0;
+let b = true;
+
 // Main Loop, called every frame
 onRender = () => {
     // Update gl canvas and aspect ratio when resizing window
@@ -214,6 +227,16 @@ onRender = () => {
         if (o.update) o.update();
         if (o.render) o.render(o);
     });
+
+    // Clone/destroy test
+    if (time - prevTime >= 0.05 && b) {
+        prevTime = time;
+        if (time <= Math.PI*2.2 + .025) {
+            sphere.clone(cloneContainer).translate([2*Math.sin(time), 2*Math.cos(time), 0]);
+        } else if (time > Math.PI*2.2 + .025 && time <= Math.PI*4.4 + .025) {
+            if (cloneContainer.children.at(-1)) cloneContainer.children.at(-1).destroy();
+        }
+    }
 
     renderSkybox(skyboxProgramInfo,);
 }
