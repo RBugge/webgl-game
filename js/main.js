@@ -89,6 +89,10 @@ window.addEventListener("load", async function () {
         rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj')),
         boy: createSCs(await loadOBJ('assets/boy/BoyOBJ.obj')),
         revolver: createSCs(await loadOBJ('assets/revolver/revolver_light.obj')),
+                
+        // Testing the target spawn
+        target: createSCs(await loadOBJ('assets/target/Target.obj'))
+        // Testing the target spawn
     };
 
 
@@ -168,6 +172,13 @@ window.addEventListener("load", async function () {
         .translate([-8, 0, 0], false);
 
     cloneContainer = new GameObject();
+    
+    // Testing the target spawn
+    target1 = new GameObject( {
+        model: models.target
+    })
+        .setPosition([5, 5, 15]);
+    // Testing the target spawn
 
     // start render loop
     gameLoop = new GameLoop(onRender).start();
