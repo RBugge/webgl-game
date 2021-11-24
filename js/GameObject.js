@@ -34,6 +34,7 @@ class GameObject {
 
         if (this.model) {
             this.modelDim = computeModelExtent(this.model);
+            let modelCenter = this.modelDim.center;
 
             // Center Objects
             for (let i = 0; i < this.model.length; i++) {
@@ -45,6 +46,8 @@ class GameObject {
             // Recompute model extents
             this.modelDim = computeModelExtent(this.model);
             this.setModelMatrix();
+
+            if(params.center) this.setPosition(modelCenter);
 
             this.vertexAttributes = this.model.map((d) => ({
                 position: { numComponents: 3, data: d.sc.positions },

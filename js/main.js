@@ -89,6 +89,10 @@ window.addEventListener("load", async function () {
         rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj')),
         boy: createSCs(await loadOBJ('assets/boy/BoyOBJ.obj')),
         revolver: createSCs(await loadOBJ('assets/revolver/revolver_light.obj')),
+
+        // Testing the target spawn
+        target: createSCs(await loadOBJ('assets/target/Target.obj'))
+        // Testing the target spawn
     };
 
 
@@ -169,6 +173,19 @@ window.addEventListener("load", async function () {
 
     cloneContainer = new GameObject();
 
+    // Testing the target spawn
+    target1 = new GameObject({
+        model: models.target
+    })
+        .rotate({x: 90})
+        .setPosition([5, 1, -15]);
+    /*
+        positive x will move target to the right, negative x to the left
+        positive y will move target to up, negative y down
+        positive z will move target behind player, negative in front
+     */
+    // Testing the target spawn
+
     // start render loop
     gameLoop = new GameLoop(onRender).start();
 });
@@ -203,7 +220,8 @@ updateViewMatrix = () => {
 
 // Clone/destroy test
 let prevTime = 0;
-let b = true;
+let count = 0;
+let rad = Math.PI / 10
 
 // Main Loop, called every frame
 onRender = () => {
@@ -228,15 +246,12 @@ onRender = () => {
         if (o.render) o.render(o);
     });
 
-    // Clone/destroy test
-    if (time - prevTime >= 0.05 && b) {
-        prevTime = time;
-        if (time <= Math.PI*2.2 + .025) {
-            sphere.clone(cloneContainer).translate([2*Math.sin(time), 2*Math.cos(time), 0]);
-        } else if (time > Math.PI*2.2 + .025 && time <= Math.PI*4.4 + .025) {
-            if (cloneContainer.children.at(-1)) cloneContainer.children.at(-1).destroy();
-        }
-    }
+    // Clone/destroy testF
+    count++;
+    if (count <= 370) {
+        sphere.clone(cloneContainer).translate([2 * Math.sin(2 * time), 2 * Math.cos(2 * time), count * (13 / 370)]);
+    } else if (cloneContainer.children.at(-1)) delete cloneContainer.children.at(-1).destroy();
+    else count = 0;
 
     renderSkybox(skyboxProgramInfo,);
 }
