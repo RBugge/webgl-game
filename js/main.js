@@ -203,7 +203,8 @@ updateViewMatrix = () => {
 
 // Clone/destroy test
 let prevTime = 0;
-let b = true;
+let count = 0;
+let rad = Math.PI/10
 
 // Main Loop, called every frame
 onRender = () => {
@@ -229,13 +230,13 @@ onRender = () => {
     });
 
     // Clone/destroy test
-    if (time - prevTime >= 0.05 && b) {
+    if (time - prevTime >= rad) {
+        count++;
         prevTime = time;
-        if (time <= Math.PI*2.2 + .025) {
+        if (count <= 20) {
             sphere.clone(cloneContainer).translate([2*Math.sin(time), 2*Math.cos(time), 0]);
-        } else if (time > Math.PI*2.2 + .025 && time <= Math.PI*4.4 + .025) {
-            if (cloneContainer.children.at(-1)) cloneContainer.children.at(-1).destroy();
-        }
+        } else if (cloneContainer.children.at(-1)) cloneContainer.children.at(-1).destroy();
+        else count = 0;
     }
 
     renderSkybox(skyboxProgramInfo,);
