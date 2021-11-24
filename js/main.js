@@ -230,14 +230,14 @@ onRender = () => {
     });
 
     // Clone/destroy test
-    if (time - prevTime >= rad) {
+    // if (time - prevTime >= rad) {
         count++;
-        prevTime = time;
-        if (count <= 20) {
+        // prevTime = time;
+        if (count <= 360) {
             sphere.clone(cloneContainer).translate([2*Math.sin(time), 2*Math.cos(time), 0]);
         } else if (cloneContainer.children.at(-1)) cloneContainer.children.at(-1).destroy();
         else count = 0;
-    }
+    // }
 
     renderSkybox(skyboxProgramInfo,);
 }
