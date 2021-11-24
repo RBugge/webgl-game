@@ -16,16 +16,18 @@ class GameObject {
 
     constructor(params) {
         if (params) {
+            this.params = params;
             this.model = params.model;
             this.texture = params.texture ? params.texture : textures.default;
             this.shaders = params.shaders ? params.shaders : defaultShaders;
             this.collider = params.collider;
-
-            this.script = params.script ? new params.script(this) : new defaultScript(this);
-            this.update = this.script.update;
+            if (params.script) {
+                this.script = new params.script(this);
+                this.update = this.script.update;
+            }
 
             if (params.render || (params.render === undefined))
-                this.render = this.script.render ? this.script.render : defaultRender;
+                this.render = (this.script && this.script.render) ? this.script.render : defaultRender;
             if (this.collider)
                 this.collider.callback = this.script.onCollision;
         }
@@ -58,9 +60,10 @@ class GameObject {
 
         // Add to scene and run object's start script
         scene.push(this);
-        if (params) {
+        if (params && params.script) {
             this.script.start();
         }
+        return this;
     }
 
     // Apply model transformations
@@ -109,6 +112,7 @@ class GameObject {
             : this.transform.Translation = v3.add(this.transform.Translation, vector);
         this.setModelMatrix();
         this.children.forEach(child => child.setPosition(this.position, true));
+        return this;
     }
 
     // Sets the position in world space and removes any previous translations
@@ -118,6 +122,7 @@ class GameObject {
         this.worldTranslation = position;
         if (!isChild) this.transform.translation = [0, 0, 0];
         this.setModelMatrix();
+        return this;
     }
 
     // Accumulate rotations
@@ -130,6 +135,7 @@ class GameObject {
             child.setPosition(this.position, true);
             child.rotate(rot)
         });
+        return this;
     }
 
     // Set scale
@@ -141,10 +147,32 @@ class GameObject {
         if (scale.z) this.transform.Scale.z = scale.z;
         this.setModelMatrix();
         this.children.forEach(child => child.scale(scale));
+        return this;
     }
 
     addChild = (child) => {
         this.children.push(child);
         child.parent = this;
+        return this;
+    }
+
+    destroy = () => {
+        scene.splice(scene.indexOf(this), 1);
+        if (this.parent) this.parent.children.splice(this.parent.children.indexOf(this), 1);
+        this.children.forEach(child => child.destroy());
+    }
+
+    clone = (newParent) => {
+        let clone = new GameObject(this.params);
+
+        clone.transform = JSON.parse(JSON.stringify(this.transform));
+        clone.worldTranslation = this.worldTranslation;
+        clone.position = this.position;
+
+        this.children.forEach(child => child.clone(clone));
+        if (newParent) newParent.addChild(clone);
+        else if (this.parent) this.parent.addChild(clone);
+
+        return clone;
     }
 }
