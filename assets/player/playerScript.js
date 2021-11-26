@@ -76,7 +76,7 @@ class playerScript {
     }
 
     if (!this.jumping) {
-      if (Input.ctrl && this.oThis.position[1] >= 0.2 && !Input.shift) {
+      if (Input.c && this.oThis.position[1] >= 0.2 && !Input.shift) {
         let dx = this.crouch_speed * dt;
         this.oThis.translate([0, -dx, 0], true);
         if (this.oThis.position[1] < 0.2) {
@@ -85,7 +85,7 @@ class playerScript {
           this.oThis.setPosition([x, 0.2, z]);
         }
       }
-      if (!Input.ctrl && this.oThis.position[1] < 1.0 && !Input.shift) {
+      if (!Input.c && this.oThis.position[1] < 1.0 && !Input.shift) {
         // console.log("up");
         let dx = this.crouch_speed * dt;
         this.oThis.translate([0, dx, 0], true);
