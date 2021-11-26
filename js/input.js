@@ -9,7 +9,7 @@ Input.right = false;
 Input.movementX = 0;
 Input.movementY = 0;
 Input.space = false;
-Input.ctrl = false;
+Input.c = false;
 Input.shift = false;
 Input.updatePosition = () => {};
 
@@ -57,7 +57,7 @@ onKeyDown = (e) => {
     if(keyCode == 83) Input.s = true;
     if(keyCode == 68) Input.d = true;
     if (keyCode == 32) Input.space = true;
-    if (keyCode == 17) Input.ctrl = true;
+    if (keyCode == 67) Input.c = true;
     if (keyCode == 16) Input.shift = true;
 }
 
@@ -68,7 +68,7 @@ onKeyUp = (e) => {
     if(keyCode == 83) Input.s = false;
     if(keyCode == 68) Input.d = false;
     if (keyCode == 32) Input.space = false;
-    if (keyCode == 17) Input.ctrl = false;
+    if (keyCode == 67) Input.c = false;
     if (keyCode == 16) Input.shift = false;
 }
 
