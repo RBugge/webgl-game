@@ -77,6 +77,14 @@ window.addEventListener("load", async function () {
             ].map((url) => "https://twgljs.org/examples/images/niagarafalls2s/" + url),
             flipY: false,
             min: gl.LINEAR_MIPMAP_LINEAR
+        },
+        revolver: {
+            src: 'assets/revolver_textures/Revolver_Base_color.png',
+            flipY: true
+        },
+        target: {
+            src: 'assets/target_textures/GrainyPlastic_Base_color.png',
+            flipY: true
         }
     });
     cubemap = textures.environment;
@@ -88,7 +96,7 @@ window.addEventListener("load", async function () {
         cube: createSCs(await loadOBJ('assets/default/cube.obj')),
         rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj')),
         boy: createSCs(await loadOBJ('assets/boy/BoyOBJ.obj')),
-        revolver: createSCs(await loadOBJ('assets/revolver/revolver_light.obj')),
+        revolver: createSCs(await loadOBJ('assets/revolver/Revolver.obj')),
 
         // Testing the target spawn
         target: createSCs(await loadOBJ('assets/target/Target.obj'))
@@ -113,9 +121,10 @@ window.addEventListener("load", async function () {
 
     // Gun placeholder will need to adjust for gun model
     gun = new GameObject({
-        model: models.cube,
+        model: models.revolver,
+        texture: textures.revolver,
     })
-        .scale(0.05)
+        .scale(0.1)
         .translate([0.1, -0.1, -0.2]);
     camera.addChild(gun);
 
@@ -175,7 +184,8 @@ window.addEventListener("load", async function () {
 
     // Testing the target spawn
     target1 = new GameObject({
-        model: models.target
+        model: models.target,
+        texture: textures.target,
     })
         .rotate({x: 90})
         .setPosition([5, 1, -15]);
