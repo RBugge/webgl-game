@@ -79,15 +79,15 @@ window.addEventListener("load", async function () {
             min: gl.LINEAR_MIPMAP_LINEAR
         },
         revolver: {
-            src: 'assets/revolver_textures/Revolver_Base_color.png',
+            src: 'assets/Textures/revolver_textures/Revolver_Base_color.png',
             flipY: true
         },
         target: {
-            src: 'assets/target_textures/GrainyPlastic_Base_color.png',
+            src: 'assets/Textures/target_textures/GrainyPlastic_Base_color.png',
             flipY: true
         },
         level: {
-            src: 'assets/level/LevelPlaceholder.mtl',
+            src: 'assets/Textures/level/LevelPlaceholder.mtl',
             flipY: true
         }
     });
