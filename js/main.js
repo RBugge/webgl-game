@@ -194,6 +194,7 @@ window.addEventListener("load", async function () {
     })
         .rotate({x: 90})
         .setPosition([5, 1, -15]);
+
     level = new GameObject({
         model: models.level,
         texture: textures.target,
