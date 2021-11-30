@@ -85,6 +85,10 @@ window.addEventListener("load", async function () {
         target: {
             src: 'assets/target_textures/GrainyPlastic_Base_color.png',
             flipY: true
+        },
+        level: {
+            src: 'assets/level/LevelPlaceholder.mtl',
+            flipY: true
         }
     });
     cubemap = textures.environment;
@@ -99,7 +103,8 @@ window.addEventListener("load", async function () {
         revolver: createSCs(await loadOBJ('assets/revolver/Revolver.obj')),
 
         // Testing the target spawn
-        target: createSCs(await loadOBJ('assets/target/Target.obj'))
+        target: createSCs(await loadOBJ('assets/target/Target.obj')),
+        level: createSCs(await loadOBJ('assets/level/LevelPlaceholder.obj'))
         // Testing the target spawn
     };
 
@@ -189,6 +194,12 @@ window.addEventListener("load", async function () {
     })
         .rotate({x: 90})
         .setPosition([5, 1, -15]);
+    level = new GameObject({
+        model: models.level,
+        texture: textures.target,
+    })
+        .scale(50)
+        .setPosition([0, -5, 0]);
     /*
         positive x will move target to the right, negative x to the left
         positive y will move target to up, negative y down
