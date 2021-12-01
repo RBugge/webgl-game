@@ -100,7 +100,7 @@ window.addEventListener("load", async function () {
         cube: createSCs(await loadOBJ('assets/default/cube.obj')),
         rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj')),
         boy: createSCs(await loadOBJ('assets/boy/BoyOBJ.obj')),
-        revolver: createSCs(await loadOBJ('assets/revolver/Revolver.obj')),
+        revolver: createSCs(await loadOBJ('assets/revolver/revolverNoSight.obj')),
 
         // Testing the target spawn
         target: createSCs(await loadOBJ('assets/target/Target.obj')),
@@ -130,7 +130,7 @@ window.addEventListener("load", async function () {
         texture: textures.revolver,
     })
         .scale(0.1)
-        .translate([0.1, -0.1, -0.2]);
+        .translate([0.09, -0.08, -0.2]);
     camera.addChild(gun);
 
 
