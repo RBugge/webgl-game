@@ -93,7 +93,7 @@ window.addEventListener("load", async function () {
             flipY: true
         },
         level: {
-            src: repo + 'assets/Textures/level/LevelPlaceholder.mtl',
+            src: repo + 'assets/level/LevelPlaceholder.mtl',
             flipY: true
         }
     });
