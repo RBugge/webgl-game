@@ -82,14 +82,10 @@ revolverShaders = {
 
             vec3 ambient = vec3(ambientIntensity * materialColor);
             vec3 specular = specularColor * pow(clamp(dot(H,N),0.,1.), shininess);
-
             
             vec3 diffuse = materialColor * clamp(dot(L,N), 0., 1.);
             vec3 color = (1.-K_s)*diffuse + K_s*specular + ambient;
             outColor = vec4(color, 1.0);
-
-
-
 
             // float fakeLight = dot(vec3(1.0,1.0,1.0), normalN) * .1 + 0.8;
             // outColor = vec4(texColor * fakeLight * normalModifier, 1.0);

@@ -23,10 +23,11 @@ GunRender = (o) => {
         cubeMapTex: cubemap,
         mapping: 1,
         ambientIntensity: 60/100,
-        K_s: 0.5,
-        shininess: 80,
+        K_s: 0.6,
+        shininess: 50,
         specularColor: hex2rgb("#ffffff"),
-        light: [15000,15000,15000, 0],
+        light: [5000,2000,2000, 0],
+        // light: [0,0,0,0],
         normalTexture: o.normalTexture
     })
     twgl.setUniforms(o.programInfo, uniforms);
