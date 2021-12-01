@@ -66,9 +66,9 @@ revolverShaders = {
 
             
 
-            float normalModifier = dot(vec3(1.0,1.0,1.0), normal) * .1 + 1.;
+            float normalModifier = dot(vec3(1.0,1.0,1.0), normal) * .2 + 1.2;
 
-            float fakeLight = dot(vec3(1.0,1.0,1.0), normalN) * .1 + 1.;
+            float fakeLight = dot(vec3(1.0,1.0,1.0), normalN) * .1 + 0.8;
             outColor = vec4(texColor * fakeLight * normalModifier, 1.0);
             
 
