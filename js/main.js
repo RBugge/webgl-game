@@ -204,7 +204,7 @@ window.addEventListener("load", async function () {
         model: models.target,
         texture: textures.target,
         normalTexture: textures.targetNormal,
-        // shader: targetShaders,
+        shaders: targetShadersAlt,
     })
         .rotate({x: 90})
         .setPosition([5, 1, -15]);
