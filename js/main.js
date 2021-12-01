@@ -88,6 +88,10 @@ window.addEventListener("load", async function () {
             src: repo + 'assets/Textures/target_textures/GrainyPlastic_Base_color.png',
             flipY: true
         },
+        targetNormal: {
+            src: 'assets/Textures/target_textures/GrainyPlastic_Normal_OpenGL.png',
+            flipY: true
+        },
         level: {
             src: repo + 'assets/Textures/level/LevelPlaceholder.mtl',
             flipY: true
@@ -193,6 +197,8 @@ window.addEventListener("load", async function () {
     target1 = new GameObject({
         model: models.target,
         texture: textures.target,
+        normalTexture: textures.targetNormal,
+        // shader: targetShaders,
     })
         .rotate({x: 90})
         .setPosition([5, 1, -15]);
