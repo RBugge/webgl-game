@@ -39,7 +39,8 @@ defaultRender = (o) => {
         projectionMatrix: projectionMatrix,
         tex: o.texture,
         cubeMapTex: cubemap,
-        mapping: 1
+        mapping: 1,
+        normalTexture: o.normalTexture
     })
     twgl.setUniforms(o.programInfo, uniforms);
 
