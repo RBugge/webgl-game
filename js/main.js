@@ -139,6 +139,8 @@ window.addEventListener("load", async function () {
         model: models.revolver,
         texture: textures.revolver,
         shaders:  revolverShaders,
+        render: true,
+        script: gunScript,
         normalTexture: textures.revolverNormal,
     })
         .scale(0.1)

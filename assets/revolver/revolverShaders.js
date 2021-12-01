@@ -42,6 +42,13 @@ revolverShaders = {
         uniform vec3 eyePosition;
         uniform sampler2D normalTexture;
 
+        
+        uniform vec4 light;
+        uniform float ambientIntensity;
+        uniform vec3 specularColor;
+        uniform float shininess;    
+        uniform float K_s;
+
         in vec2 fragUV;
         in vec3 fragNormal;
         in vec3 fragPosition;
@@ -55,26 +62,38 @@ revolverShaders = {
 
             vec3 texColor = texture( tex, fragUV ).rgb;
             vec3 envColor = texture( cubeMapTex, R ).rgb;
-
-
                 
             vec3 normalN = N;
 
             vec3 normal = texture(normalTexture, fragUV).rgb;
             // transform normal vector to range [-1,1]
             normal = normalize(normal * 2.0 - 1.0); 
-
-            
-
             float normalModifier = dot(vec3(1.0,1.0,1.0), normal) * .2 + 1.2;
 
-            float fakeLight = dot(vec3(1.0,1.0,1.0), normalN) * .1 + 0.8;
-            outColor = vec4(texColor * fakeLight * normalModifier, 1.0);
-            
+            vec3 materialColor = texColor * normalModifier;
+            vec3 L;
+            if (light.w==0.0){
+                L = normalize(light.xyz);
+              }
+              else{
+                  L = normalize(light.xyz-fragPosition);
+              }
+            vec3 H = normalize(L+V);
 
-            // outColor = vec4(texColor * , normal), 1);
-            // outColor = vec4(normalize(normalTex.xyz) * texColor , 1);
-            // outColor = vec4(abs(N), 1);
+            vec3 ambient = vec3(ambientIntensity * materialColor);
+            vec3 specular = specularColor * pow(clamp(dot(H,N),0.,1.), shininess);
+
+            
+            vec3 diffuse = materialColor * clamp(dot(L,N), 0., 1.);
+            vec3 color = (1.-K_s)*diffuse + K_s*specular + ambient;
+            outColor = vec4(color, 1.0);
+
+
+
+
+            // float fakeLight = dot(vec3(1.0,1.0,1.0), normalN) * .1 + 0.8;
+            // outColor = vec4(texColor * fakeLight * normalModifier, 1.0);
+            
         }`
 }
            
