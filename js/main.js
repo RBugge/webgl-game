@@ -268,12 +268,12 @@ onRender = () => {
         if (o.render) o.render(o);
     });
 
-    // Clone/destroy testF
-    count++;
-    if (count <= 370) {
-        sphere.clone(cloneContainer).translate([2 * Math.sin(2 * time), 2 * Math.cos(2 * time), count * (13 / 370)]);
-    } else if (cloneContainer.children.at(-1)) delete cloneContainer.children.at(-1).destroy();
-    else count = 0;
+    // Clone/destroy test
+    // count++;
+    // if (count <= 370) {
+    //     sphere.clone(cloneContainer).translate([2 * Math.sin(2 * time), 2 * Math.cos(2 * time), count * (13 / 370)]);
+    // } else if (cloneContainer.children.at(-1)) delete cloneContainer.children.at(-1).destroy();
+    // else count = 0;
 
     renderSkybox(skyboxProgramInfo,);
 }
