@@ -34,6 +34,8 @@ let scene = [];
 
 let canvas;
 
+const repo = 'https://raw.githubusercontent.com/RBugge/webgl-game/main/';
+
 /** @type {WebGLRenderingContext} */
 window.addEventListener("load", async function () {
     mat4 = importMat4();
@@ -58,11 +60,11 @@ window.addEventListener("load", async function () {
     // Load textures here
     textures = twgl.createTextures(gl, {
         default: {
-            src: 'assets/default/defaultTexture.jpg',
+            src: repo + 'assets/default/defaultTexture.jpg',
             flipY: true,
         },
         rayman: {
-            src: 'assets/rayman/Rayman.png',
+            src: repo + 'assets/rayman/Rayman.png',
             flipY: true
         },
         environment: {
@@ -79,15 +81,15 @@ window.addEventListener("load", async function () {
             min: gl.LINEAR_MIPMAP_LINEAR
         },
         revolver: {
-            src: 'assets/Textures/revolver_textures/Revolver_Base_color.png',
+            src: repo + 'assets/Textures/revolver_textures/Revolver_Base_color.png',
             flipY: true
         },
         target: {
-            src: 'assets/Textures/target_textures/GrainyPlastic_Base_color.png',
+            src: repo + 'assets/Textures/target_textures/GrainyPlastic_Base_color.png',
             flipY: true
         },
         level: {
-            src: 'assets/Textures/level/LevelPlaceholder.mtl',
+            src: repo + 'assets/Textures/level/LevelPlaceholder.mtl',
             flipY: true
         }
     });
@@ -96,15 +98,15 @@ window.addEventListener("load", async function () {
 
     // Load models here, only OBJs can be loaded currently
     const models = {
-        sphere: createSCs(await loadOBJ('assets/default/sphere.obj')),
-        cube: createSCs(await loadOBJ('assets/default/cube.obj')),
-        rayman: createSCs(await loadOBJ('assets/rayman/raymanModel.obj')),
-        boy: createSCs(await loadOBJ('assets/boy/BoyOBJ.obj')),
-        revolver: createSCs(await loadOBJ('assets/revolver/revolverNoSight.obj')),
+        sphere: createSCs(await loadOBJ(repo + 'assets/default/sphere.obj')),
+        cube: createSCs(await loadOBJ(repo + 'assets/default/cube.obj')),
+        rayman: createSCs(await loadOBJ(repo + 'assets/rayman/raymanModel.obj')),
+        boy: createSCs(await loadOBJ(repo + 'assets/boy/BoyOBJ.obj')),
+        revolver: createSCs(await loadOBJ(repo + 'assets/revolver/revolverNoSight.obj')),
 
         // Testing the target spawn
-        target: createSCs(await loadOBJ('assets/target/Target.obj')),
-        level: createSCs(await loadOBJ('assets/level/LevelPlaceholder.obj'))
+        target: createSCs(await loadOBJ(repo + 'assets/target/Target.obj')),
+        level: createSCs(await loadOBJ(repo + 'assets/level/LevelPlaceholder.obj'))
         // Testing the target spawn
     };
 
