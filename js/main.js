@@ -84,6 +84,10 @@ window.addEventListener("load", async function () {
             src: repo + 'assets/Textures/revolver_textures/Revolver_Base_color.png',
             flipY: true
         },
+        revolverNormal: {
+            src: repo + 'assets/Textures/revolver_textures/Revolver_Normal_OpenGL.png',
+            flipY: true
+        },
         target: {
             src: repo + 'assets/Textures/target_textures/GrainyPlastic_Base_color.png',
             flipY: true
@@ -134,6 +138,8 @@ window.addEventListener("load", async function () {
     gun = new GameObject({
         model: models.revolver,
         texture: textures.revolver,
+        shaders:  revolverShaders,
+        normalTexture: textures.revolverNormal,
     })
         .scale(0.1)
         .translate([0.09, -0.08, -0.2]);
