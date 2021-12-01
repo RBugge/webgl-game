@@ -14,7 +14,6 @@ Input.shift = false;
 Input.updatePosition = () => {};
 
 initInput = () => {
-    console.log('asdasd')
     canvas.requestPointerLock = canvas.requestPointerLock ||
         canvas.mozRequestPointerLock;
     document.exitPointerLock = document.exitPointerLock ||
