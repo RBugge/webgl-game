@@ -13,6 +13,7 @@ class GameObject {
     position = [0, 0, 0];
     modelMatrix = m4.identity();
     modelDim = { dia: 1 };
+    destroyed = false;
 
     constructor(params) {
         if (params) {
@@ -48,7 +49,7 @@ class GameObject {
             this.modelDim = computeModelExtent(this.model);
             this.setModelMatrix();
 
-            if(params.center) this.setPosition(modelCenter);
+            if (params.center) this.setPosition(modelCenter);
 
             this.vertexAttributes = this.model.map((d) => ({
                 position: { numComponents: 3, data: d.sc.positions },
@@ -161,9 +162,12 @@ class GameObject {
     }
 
     destroy = () => {
-        scene.splice(scene.indexOf(this), 1);
-        if (this.parent) this.parent.children.splice(this.parent.children.indexOf(this), 1);
-        this.children.forEach(child => child.destroy());
+        if (!this.destroyed) {
+            this.destroyed = true;
+            scene.splice(scene.indexOf(this), 1);
+            if (this.parent) this.parent.children.splice(this.parent.children.indexOf(this), 1);
+            this.children.forEach(child => child.destroy());
+        }
     }
 
     clone = (newParent) => {
