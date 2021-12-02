@@ -196,14 +196,54 @@ window.addEventListener("load", async function () {
   cloneContainer = new GameObject();
 
   // Testing the target spawn
-  target1 = new GameObject({
-    model: models.target,
-    texture: textures.target,
-    normalTexture: textures.targetNormal,
-    shaders: targetShadersAlt,
+  target0 = new GameObject({
+      model: models.target,
+      texture: textures.target,
+      normalTexture: textures.targetNormal,
+      shaders: targetShadersAlt,
   })
-    .rotate({ x: 90 })
-    .setPosition([5, 1, -15]);
+      .rotate({x: 90})
+      .setPosition([0, 3, -15]);
+  target1 = new GameObject({
+      model: models.target,
+      texture: textures.target,
+      normalTexture: textures.targetNormal,
+      shaders: targetShadersAlt,
+  })
+      .rotate({x: 90})
+      .setPosition([0, 7, -15]);
+  target2 = new GameObject({
+      model: models.target,
+      texture: textures.target,
+      normalTexture: textures.targetNormal,
+      shaders: targetShadersAlt,
+  })
+      .rotate({x: 90})
+      .setPosition([-5, 4, -15]);
+  target3 = new GameObject({
+      model: models.target,
+      texture: textures.target,
+      normalTexture: textures.targetNormal,
+      shaders: targetShadersAlt,
+  })
+      .rotate({x: 90})
+      .setPosition([5, 4, -15]);
+  target4 = new GameObject({
+      model: models.target,
+      texture: textures.target,
+      normalTexture: textures.targetNormal,
+      shaders: targetShadersAlt,
+  })
+      .rotate({x: 90})
+      .setPosition([-2.5, -1, -15]);
+  target5 = new GameObject({
+      model: models.target,
+      texture: textures.target,
+      normalTexture: textures.targetNormal,
+      shaders: targetShadersAlt,
+  })
+      .rotate({x: 90})
+      .setPosition([2.5, -1, -15]);
 
   level = new GameObject({
     model: models.level,
@@ -277,6 +317,21 @@ onRender = () => {
     if (o.update) o.update();
     if (o.render) o.render(o);
   });
+  
+  // Input to test the destruction of objects
+  if (Input.t)
+      target0.destroy();
+  if (Input.y)
+      target1.destroy();
+  if (Input.u)
+      target2.destroy();
+  if (Input.i)
+      target3.destroy();
+  if (Input.o)
+      target4.destroy();
+  if (Input.p)
+      target5.destroy();
+  // Input to test the destruction of objects
 
   // Clone/destroy test
   // count++;
