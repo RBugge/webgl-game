@@ -14,6 +14,15 @@ Input.shift = false;
 Input.p = false;
 Input.updatePosition = () => {};
 
+// Input to test the destruction of objects
+Input.t = false;
+Input.y = false;
+Input.u = false;
+Input.i = false;
+Input.o = false;
+Input.p = false;
+// Input to test the destruction of objects
+
 initInput = () => {
   canvas.requestPointerLock =
     canvas.requestPointerLock || canvas.mozRequestPointerLock;
@@ -61,6 +70,15 @@ onKeyDown = (e) => {
   if (keyCode == 67) Input.c = true;
   if (keyCode == 16) Input.shift = true;
   if (keyCode == 80) Input.p = true;
+  
+  // Input to test the destruction of objects
+  if(keyCode == 84) Input.t = true;
+  if(keyCode == 89) Input.y = true;
+  if(keyCode == 85) Input.u = true;
+  if(keyCode == 73) Input.i = true;
+  if(keyCode == 79) Input.o = true;
+  if(keyCode == 80) Input.p = true;
+  // Input to test the destruction of objects
 };
 
 onKeyUp = (e) => {
@@ -73,6 +91,15 @@ onKeyUp = (e) => {
   if (keyCode == 67) Input.c = false;
   if (keyCode == 16) Input.shift = false;
   if (keyCode == 80) Input.p = false;
+  
+  // Input to test the destruction of objects
+  if(keyCode == 84) Input.t = false;
+  if(keyCode == 89) Input.y = false;
+  if(keyCode == 85) Input.u = false;
+  if(keyCode == 73) Input.i = false;
+  if(keyCode == 79) Input.o = false;
+  if(keyCode == 80) Input.p = false;
+  // Input to test the destruction of objects
 };
 
 onMouseDown = (e) => {
