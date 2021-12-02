@@ -329,7 +329,7 @@ onRender = () => {
       target3.destroy();
   if (Input.o)
       target4.destroy();
-  if (Input.p)
+  if (Input.l)
       target5.destroy();
   // Input to test the destruction of objects
 
