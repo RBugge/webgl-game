@@ -81,7 +81,7 @@ targetShadersAlt = {
 
             // Basic directional light stuff. i think the vec3 is direction
             //float fakeLight = dot(vec3(0.0, 0.7, 0.5), normalN) * .5 + .5;
-            float fakeLight = 1.0; // left alone for now.
+            float fakeLight = 0.65; // left alone for now.
 
             // Combined
             outColor = vec4(texColor * fakeLight * normalModifier, 1.0);
