@@ -38,6 +38,8 @@ let showGui = false;
 
 const menu = new gui();
 
+let targets = [];
+
 const repo = "https://raw.githubusercontent.com/RBugge/webgl-game/main/";
 
 /** @type {WebGLRenderingContext} */
