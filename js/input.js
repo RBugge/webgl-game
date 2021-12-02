@@ -20,7 +20,7 @@ Input.y = false;
 Input.u = false;
 Input.i = false;
 Input.o = false;
-Input.p = false;
+Input.l = false;
 // Input to test the destruction of objects
 
 initInput = () => {
@@ -77,7 +77,7 @@ onKeyDown = (e) => {
   if(keyCode == 85) Input.u = true;
   if(keyCode == 73) Input.i = true;
   if(keyCode == 79) Input.o = true;
-  if(keyCode == 80) Input.p = true;
+  if(keyCode == 80) Input.l = true;
   // Input to test the destruction of objects
 };
 
@@ -98,7 +98,7 @@ onKeyUp = (e) => {
   if(keyCode == 85) Input.u = false;
   if(keyCode == 73) Input.i = false;
   if(keyCode == 79) Input.o = false;
-  if(keyCode == 80) Input.p = false;
+  if(keyCode == 80) Input.l = false;
   // Input to test the destruction of objects
 };
 
