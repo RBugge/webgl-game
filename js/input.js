@@ -11,72 +11,76 @@ Input.movementY = 0;
 Input.space = false;
 Input.c = false;
 Input.shift = false;
+Input.p = false;
 Input.updatePosition = () => {};
 
 initInput = () => {
-    canvas.requestPointerLock = canvas.requestPointerLock ||
-        canvas.mozRequestPointerLock;
-    document.exitPointerLock = document.exitPointerLock ||
-        document.mozExitPointerLock;
-    canvas.onclick = function () {
-        if (!isPointerLocked)
-            canvas.requestPointerLock();
-    };
+  canvas.requestPointerLock =
+    canvas.requestPointerLock || canvas.mozRequestPointerLock;
+  document.exitPointerLock =
+    document.exitPointerLock || document.mozExitPointerLock;
+  canvas.onclick = function () {
+    if (!isPointerLocked) canvas.requestPointerLock();
+  };
 
-    window.addEventListener("keydown", onKeyDown, false);
-    window.addEventListener("keyup", onKeyUp, false);
-    window.addEventListener("mousedown", onMouseDown, false);
-    window.addEventListener("mouseup", onMouseUp, false);
+  window.addEventListener("keydown", onKeyDown, false);
+  window.addEventListener("keyup", onKeyUp, false);
+  window.addEventListener("mousedown", onMouseDown, false);
+  window.addEventListener("mouseup", onMouseUp, false);
 
-    document.addEventListener('pointerlockchange', lockChangeAlert, false);
-    document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
-}
+  document.addEventListener("pointerlockchange", lockChangeAlert, false);
+  document.addEventListener("mozpointerlockchange", lockChangeAlert, false);
+};
 
 lockChangeAlert = () => {
-    if (document.pointerLockElement === canvas ||
-        document.mozPointerLockElement === canvas) {
-        isPointerLocked = true;
-        document.addEventListener("mousemove", updatePosition, false);
-    } else {
-        isPointerLocked = false;
-        document.removeEventListener("mousemove", updatePosition, false);
-    }
-}
+  if (
+    document.pointerLockElement === canvas ||
+    document.mozPointerLockElement === canvas
+  ) {
+    isPointerLocked = true;
+    document.addEventListener("mousemove", updatePosition, false);
+  } else {
+    isPointerLocked = false;
+    document.removeEventListener("mousemove", updatePosition, false);
+  }
+};
 
 updatePosition = (e) => {
-    Input.movementX = e.movementX;
-    Input.movementY = e.movementY;
-    camera.script.updateLookAt();
-}
+  Input.movementX = e.movementX;
+  Input.movementY = e.movementY;
+  camera.script.updateLookAt();
+};
 
 onKeyDown = (e) => {
-    let keyCode = e.keyCode;
-    if(keyCode == 87) Input.w = true;
-    if(keyCode == 65) Input.a = true;
-    if(keyCode == 83) Input.s = true;
-    if(keyCode == 68) Input.d = true;
-    if (keyCode == 32) Input.space = true;
-    if (keyCode == 67) Input.c = true;
-    if (keyCode == 16) Input.shift = true;
-}
+  let keyCode = e.keyCode;
+  if (keyCode == 87) Input.w = true;
+  if (keyCode == 65) Input.a = true;
+  if (keyCode == 83) Input.s = true;
+  if (keyCode == 68) Input.d = true;
+  if (keyCode == 32) Input.space = true;
+  if (keyCode == 67) Input.c = true;
+  if (keyCode == 16) Input.shift = true;
+  if (keyCode == 80) Input.p = true;
+};
 
 onKeyUp = (e) => {
-    let keyCode = e.keyCode;
-    if(keyCode == 87) Input.w = false;
-    if(keyCode == 65) Input.a = false;
-    if(keyCode == 83) Input.s = false;
-    if(keyCode == 68) Input.d = false;
-    if (keyCode == 32) Input.space = false;
-    if (keyCode == 67) Input.c = false;
-    if (keyCode == 16) Input.shift = false;
-}
+  let keyCode = e.keyCode;
+  if (keyCode == 87) Input.w = false;
+  if (keyCode == 65) Input.a = false;
+  if (keyCode == 83) Input.s = false;
+  if (keyCode == 68) Input.d = false;
+  if (keyCode == 32) Input.space = false;
+  if (keyCode == 67) Input.c = false;
+  if (keyCode == 16) Input.shift = false;
+  if (keyCode == 80) Input.p = false;
+};
 
 onMouseDown = (e) => {
-    if(e.which === 1) Input.left = true;
-    if(e.which === 3) Input.right = true;
-}
+  if (e.which === 1) Input.left = true;
+  if (e.which === 3) Input.right = true;
+};
 
 onMouseUp = (e) => {
-    if(e.which === 1) Input.left = false;
-    if(e.which === 3) Input.right = false;
-}
+  if (e.which === 1) Input.left = false;
+  if (e.which === 3) Input.right = false;
+};

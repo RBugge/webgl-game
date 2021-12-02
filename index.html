@@ -1,76 +1,190 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
 
-<head>
-  <meta http-equiv="Access-Control-Allow-Origin" content="*">
-  <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
-  <meta content="utf-8" http-equiv="encoding" />
+    <link rel="shortcut icon" href="#" />
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+      }
 
-  <link rel="shortcut icon" href="#" />
-  <style>
-    html,
-    body {
-      margin: 0px;
-      padding: 0px;
-      width: 100%;
-      height: 100%;
-    }
+      body {
+        background-color: #404040;
+      }
 
-    body {
-      background-color: #404040;
-    }
+      canvas {
+        /* border: 1px solid black; */
+        width: 100%;
+        height: 100%;
+      }
 
-    canvas {
-      /* border: 1px solid black; */
-      width: 100%;
-      height: 100%;
-    }
+      @font-face {
+        font-family: SteelFish;
+        src: url(/Fonts/steelfish.extrabold-italic.ttf);
+      }
 
-    div {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
+      div {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
 
-  <!-- Add all scripts here -->
-  <script src="twgl.js/dist/4.x/twgl-full.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
-    integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
-    crossorigin="anonymous"></script>
-  <script src="js/OBJLoader.js"></script>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="js/utils.js"></script>
-  <script src="js/modelUtils.js"></script>
-  <script src="js/GameLoop.js"></script>
-  <script src="js/GameObject.js"></script>
-  <script src="js/input.js"></script>
-  <script src="js/Collider.js"></script>
+    <!-- Add all scripts here -->
+    <script src="twgl.js/dist/4.x/twgl-full.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/OBJLoader.js" defer></script>
+    <script src="https://d3js.org/d3.v7.min.js" defer></script>
+    <script src="js/utils.js" defer></script>
+    <script src="js/modelUtils.js" defer></script>
+    <script src="js/GameLoop.js" defer></script>
+    <script src="js/GameObject.js" defer></script>
+    <script src="js/input.js" defer></script>
+    <script src="js/Collider.js" defer></script>
+    <script src="js/gui.js" defer></script>
 
-  <script src="assets/default/defaultScript.js"></script>
-  <script src="assets/default/defaultShaders.js"></script>
+    <script src="assets/default/defaultScript.js" defer></script>
+    <script src="assets/default/defaultShaders.js" defer></script>
 
-  <script src="assets/rayman/raymanScript.js"></script>
-  <script src="assets/rayman/raymanShaders.js"></script>
-  <script src="assets/revolver/revolverShaders.js"></script>
+    <script src="assets/rayman/raymanScript.js" defer></script>
+    <script src="assets/rayman/raymanShaders.js" defer></script>
+    <script src="assets/revolver/revolverShaders.js" defer></script>
+    <script src="assets/revolver/gunScript.js" defer></script>
 
-  <script src="assets/camera/cameraScript.js"></script>
-  <script src="assets/revolver/gunScript.js"></script>
-  <script src="assets/player/playerScript.js"></script>
-  <script src="assets/target/targetShadersAlt.js"></script>
+    <script src="assets/camera/cameraScript.js" defer></script>
+    <script src="assets/player/playerScript.js" defer></script>
+    <script src="assets/target/targetShadersAlt.js" defer></script>
 
-  <script src="js/skybox.js"></script>
+    <script src="js/skybox.js" defer></script>
 
-  <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
+  </head>
 
-</head>
+  <body>
+    <div>
+      <div
+        style="
+          width: 100%;
+          height: 10%;
+          margin: 20;
+          top: 75px;
+          position: fixed;
+          z-index: 1;
+          background-color: black;
+          opacity: 75%;
+        "
+        class="result"
+        id="result_head"
+      >
+        <h1
+          style="
+            opacity: 100%;
+            color: white;
+            font-family: SteelFish;
+            font-size: 120px;
+          "
+        >
+          Results:
+        </h1>
+      </div>
 
-<body>
-  <div>
-    <canvas id="glcanvas"></canvas>
-  </div>
-</body>
+      <div
+        style="
+          width: 40%;
+          height: 40%;
+          top: 275px;
+          position: fixed;
+          z-index: 1;
+          background-color: #405275;
+          opacity: 75%;
+          display: inline-block;
+          text-align: left;
 
+          padding-left: 120px;
+          padding-top: 30px;
+          padding-bottom: 0px;
+        "
+        class="result"
+        id="result_body"
+      >
+        <h1
+          style="
+            opacity: 100%;
+            color: #f99e1a;
+            font-family: SteelFish;
+            font-size: 80px;
+          "
+        >
+          Targets Hit:
+        </h1>
+
+        <h1
+          style="
+            opacity: 100%;
+            color: #f99e1a;
+            font-family: SteelFish;
+            font-size: 80px;
+          "
+        >
+          Targets Missed:
+        </h1>
+
+        <h1
+          style="
+            opacity: 100%;
+            color: #f99e1a;
+            font-family: SteelFish;
+            font-size: 80px;
+          "
+        >
+          Accuracy:
+        </h1>
+      </div>
+      <div
+        style="
+          display: inline-block;
+          text-align: right;
+          width: 100%;
+          position: fixed;
+          margin-top: 80vh;
+          margin-right: 30vw;
+        "
+        class="result"
+      >
+        <button
+          style="
+            border-width: 2px;
+            border-radius: 5px;
+            border-color: #218ffe;
+            background-color: transparent;
+            color: #f99e1a;
+            font-family: SteelFish;
+            font-size: 45px;
+            padding-left: 30px;
+            padding-right: 30px;
+          "
+          id="result_button"
+          type="button"
+          onclick="console.log('going to main menu')"
+        >
+          Main Menu
+        </button>
+      </div>
+
+      <canvas id="glcanvas"></canvas>
+    </div>
+  </body>
 </html>
