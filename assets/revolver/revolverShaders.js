@@ -48,6 +48,7 @@ revolverShaders = {
         uniform vec3 specularColor;
         uniform float shininess;    
         uniform float K_s;
+        uniform float AmbientRatio;
 
         in vec2 fragUV;
         in vec3 fragNormal;
@@ -84,7 +85,7 @@ revolverShaders = {
             vec3 specular = specularColor * pow(clamp(dot(H,N),0.,1.), shininess);
             
             vec3 diffuse = materialColor * clamp(dot(L,N), 0., 1.);
-            vec3 color = (1.-K_s)*diffuse + K_s*specular + ambient;
+            vec3 color = ((1.-K_s)*diffuse + K_s*specular) * (1.0-AmbientRatio)+ ambient;
             outColor = vec4(color, 1.0);
 
             // float fakeLight = dot(vec3(1.0,1.0,1.0), normalN) * .1 + 0.8;

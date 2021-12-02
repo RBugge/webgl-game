@@ -26,8 +26,8 @@ GunRender = (o) => {
         K_s: 0.6,
         shininess: 50,
         specularColor: hex2rgb("#ffffff"),
-        light: [5000,2000,2000, 0],
-        // light: [0,0,0,0],
+        light: [50000,2000,2000, 0],
+        AmbientRatio: 0, // if 1, then no lighting at all except ambient.
         normalTexture: o.normalTexture
     })
     twgl.setUniforms(o.programInfo, uniforms);
