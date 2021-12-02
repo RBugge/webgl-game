@@ -258,6 +258,7 @@ window.addEventListener("load", async function () {
           (Math.random() < 0.5 ? -(Math.random()*(4))+1 : (Math.random()*(11)+4)),
           -(Math.random()*(15)+15)]);
     targets.push(target);
+  }
 
   level = new GameObject({
     model: models.level,
