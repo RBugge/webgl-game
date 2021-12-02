@@ -41,6 +41,9 @@ targetShadersAlt = {
         uniform int mapping;
         uniform vec3 eyePosition;
         uniform sampler2D normalTexture;
+        uniform vec3 light1;
+        uniform vec3 light2;
+        uniform vec3 light3;
 
         in vec2 fragUV;
         in vec3 fragNormal;
@@ -53,8 +56,17 @@ targetShadersAlt = {
             vec3 N = normalize(fragNormal);
             vec3 R = reflect(-V, N);
 
-            vec3 texColor = texture( tex, fragUV ).rgb;
-            vec3 envColor = texture( cubeMapTex, R ).rgb;
+            vec3 lght1 = normalize(light1);
+            vec3 lght2 = normalize(light2.xyz-fragPosition);
+            vec3 lght3 = normalize(light3.xyz-fragPosition);
+
+            vec3 texColor = texture( tex, fragUV ).rgb*clamp(dot(N, lght1),0.,1.);
+            texColor += texture( tex, fragUV ).rgb*clamp(dot(N, lght2),0.,1.);     
+            texColor += texture( tex, fragUV ).rgb*clamp(dot(N, lght3),0.,1.);  
+
+            vec3 envColor = texture( cubeMapTex, R ).rgb*clamp(dot(N, lght1),0.,1.);
+            envColor += texture( cubeMapTex, R ).rgb*clamp(dot(N, lght2),0.,1.);
+            envColor += texture( cubeMapTex, R ).rgb*clamp(dot(N, lght3),0.,1.);
 
             // For directional lighting
             vec3 normalN = N;
