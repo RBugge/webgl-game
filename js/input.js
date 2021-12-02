@@ -77,7 +77,7 @@ onKeyDown = (e) => {
   if(keyCode == 85) Input.u = true;
   if(keyCode == 73) Input.i = true;
   if(keyCode == 79) Input.o = true;
-  if(keyCode == 80) Input.l = true;
+  if(keyCode == 76) Input.l = true;
   // Input to test the destruction of objects
 };
 
@@ -98,7 +98,7 @@ onKeyUp = (e) => {
   if(keyCode == 85) Input.u = false;
   if(keyCode == 73) Input.i = false;
   if(keyCode == 79) Input.o = false;
-  if(keyCode == 80) Input.l = false;
+  if(keyCode == 76) Input.l = false;
   // Input to test the destruction of objects
 };
 
