@@ -196,54 +196,69 @@ window.addEventListener("load", async function () {
   cloneContainer = new GameObject();
 
   // Testing the target spawn
-  target0 = new GameObject({
-      model: models.target,
-      texture: textures.target,
-      normalTexture: textures.targetNormal,
-      shaders: targetShadersAlt,
+//   target0 = new GameObject({
+//       model: models.target,
+//       texture: textures.target,
+//       normalTexture: textures.targetNormal,
+//       shaders: targetShadersAlt,
+//   })
+//       .rotate({x: 90})
+//       .setPosition([0, 3, -15]);
+//   target1 = new GameObject({
+//       model: models.target,
+//       texture: textures.target,
+//       normalTexture: textures.targetNormal,
+//       shaders: targetShadersAlt,
+//   })
+//       .rotate({x: 90})
+//       .setPosition([0, 7, -15]);
+//   target2 = new GameObject({
+//       model: models.target,
+//       texture: textures.target,
+//       normalTexture: textures.targetNormal,
+//       shaders: targetShadersAlt,
+//   })
+//       .rotate({x: 90})
+//       .setPosition([-5, 4, -15]);
+//   target3 = new GameObject({
+//       model: models.target,
+//       texture: textures.target,
+//       normalTexture: textures.targetNormal,
+//       shaders: targetShadersAlt,
+//   })
+//       .rotate({x: 90})
+//       .setPosition([5, 4, -15]);
+//   target4 = new GameObject({
+//       model: models.target,
+//       texture: textures.target,
+//       normalTexture: textures.targetNormal,
+//       shaders: targetShadersAlt,
+//   })
+//       .rotate({x: 90})
+//       .setPosition([-2.5, -1, -15]);
+//   target5 = new GameObject({
+//       model: models.target,
+//       texture: textures.target,
+//       normalTexture: textures.targetNormal,
+//       shaders: targetShadersAlt,
+//   })
+//       .rotate({x: 90})
+//       .setPosition([2.5, -1, -15]);
+  
+  for (let i = 0; i < 10; i++) {
+  target = new GameObject({
+    model: models.target,
+    texture: textures.target,
+    normalTexture: textures.targetNormal,
+    shaders: targetShadersAlt,
   })
       .rotate({x: 90})
-      .setPosition([0, 3, -15]);
-  target1 = new GameObject({
-      model: models.target,
-      texture: textures.target,
-      normalTexture: textures.targetNormal,
-      shaders: targetShadersAlt,
-  })
-      .rotate({x: 90})
-      .setPosition([0, 7, -15]);
-  target2 = new GameObject({
-      model: models.target,
-      texture: textures.target,
-      normalTexture: textures.targetNormal,
-      shaders: targetShadersAlt,
-  })
-      .rotate({x: 90})
-      .setPosition([-5, 4, -15]);
-  target3 = new GameObject({
-      model: models.target,
-      texture: textures.target,
-      normalTexture: textures.targetNormal,
-      shaders: targetShadersAlt,
-  })
-      .rotate({x: 90})
-      .setPosition([5, 4, -15]);
-  target4 = new GameObject({
-      model: models.target,
-      texture: textures.target,
-      normalTexture: textures.targetNormal,
-      shaders: targetShadersAlt,
-  })
-      .rotate({x: 90})
-      .setPosition([-2.5, -1, -15]);
-  target5 = new GameObject({
-      model: models.target,
-      texture: textures.target,
-      normalTexture: textures.targetNormal,
-      shaders: targetShadersAlt,
-  })
-      .rotate({x: 90})
-      .setPosition([2.5, -1, -15]);
+      .setPosition([
+        (Math.random() < 0.5 ? -1 : 1)*(Math.random()*(-15)+15),
+        (Math.random() < 0.5 ? -(Math.random()*(4))+1 : (Math.random()*(11)+4)),
+        -15]);
+  targets.push(target);
+  }
 
   level = new GameObject({
     model: models.level,
