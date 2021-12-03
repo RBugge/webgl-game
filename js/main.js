@@ -13,6 +13,7 @@ let cameraAngles = {
   x_angle: -60,
 };
 let forward;
+let aimVector;
 let right;
 
 let near = 0.01;
@@ -326,6 +327,7 @@ onRender = () => {
 
   // Update the forward and right vectors
   forward = v3.subtract(lookAt.position, camera.position);
+  aimVector = v3.normalize(forward);
   forward[1] = 0;
   forward = v3.normalize(forward);
   right = v3.cross(forward, [0, 1, 0]);
