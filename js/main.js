@@ -144,7 +144,6 @@ window.addEventListener("load", async function () {
     render: false,
   }).addChild(lookAt);
 
-  // Gun placeholder will need to adjust for gun model
   gun = new GameObject({
     model: models.revolver,
     texture: textures.revolver,
@@ -274,6 +273,9 @@ let j = 0;
 
 // Main Loop, called every frame
 onRender = () => {
+  // Example: Pauses the game when menu is up
+  if(showGui) return menu.run();
+
   // Update gl canvas and aspect ratio when resizing window
   twgl.resizeCanvasToDisplaySize(gl.canvas);
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
