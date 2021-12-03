@@ -1,27 +1,26 @@
-class gunScript {
+class bulletScript {
     constructor(oThis) {
         this.oThis = oThis;
+        this.speed = 500;
+        this.SecToDie = 0.8;
+        this.framesToDieCalc = Math.floor(1 / dt) * this.framesToDie;
+        this.selfInitialAimVector = aimVector;
     }
     start = () => {
 
     }
 
     update = () => {
-    if (Input.isMouseDown("left")) {
-        let bullet = new GameObject({
-            model: modelsGlobal.sphere,
-            script: bulletScript,
-            texture: textures.bullet,
-        });
-        bullet.setPosition(this.oThis.position);
-        bullet.scale(0.1);
-        bullets.push(bullet);
-        for (let i = 0; i < bullets.length; i++)
+        if (this.framesToDieCalc-- < 0)
         {
-            bullets.splice(i, 1);
+            this.oThis.destroy();
+            return;
         }
-
-    };
+            
+        this.oThis.translate(
+            v3.multiply(this.selfInitialAimVector, [this.speed * dt, this.speed * dt, this.speed * dt]),
+            true
+          );
     }
 
     render = (o) => {

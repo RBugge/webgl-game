@@ -138,7 +138,7 @@ class playerScript {
 
       //play gunshot sound
       let gunshot = new Audio("assets/audio/gunshot.mp3");
-      gunshot.volume = 0.1; //avoid tinnitus
+      gunshot.volume = 0.05; //avoid tinnitus
       gunshot.play();
     }
   };

@@ -41,6 +41,8 @@ let LOOK_SENSITIVITY = 10; // global value to share
 const menu = new gui();
 
 let targets = [];
+let bullets = [];
+let modelsGlobal = null;
 
 const repo = "https://raw.githubusercontent.com/RBugge/webgl-game/main/";
 
@@ -118,6 +120,10 @@ window.addEventListener("load", async function () {
       src: repo + "assets/Textures/level_textures/Material_Metallic.png",
       flipY: true,
     },
+    bullet: {
+      src: repo + "assets/Textures/revolver_textures/Bullet.png",
+      flipY: true,
+    },
   });
   cubemap = textures.environment;
   initSkybox();
@@ -132,6 +138,7 @@ window.addEventListener("load", async function () {
     target: createSCs(await loadOBJ(repo + "assets/target/Target.obj")),
     level: createSCs(await loadOBJ(repo + "assets/level/LevelPlaceholder.obj")),
   };
+  modelsGlobal = models;
 
   // Camera object with lookAt as child
   // Set render to false so no model shows. Models can be added for debugging purposes
