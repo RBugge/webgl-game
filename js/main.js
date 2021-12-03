@@ -109,6 +109,14 @@ window.addEventListener("load", async function () {
       src: repo + "assets/Textures/level_textures/Material_Base_color.png",
       flipY: true,
     },
+    levelNormal: {
+      src: repo + "assets/Textures/level_textures/Material_Normal_OpenGL.png",
+      flipY: true,
+    },
+    levelMetallic: {
+      src: repo + "assets/Textures/level_textures/Material_Metallic.png",
+      flipY: true,
+    },
   });
   cubemap = textures.environment;
   initSkybox();
@@ -217,7 +225,11 @@ window.addEventListener("load", async function () {
 
   level = new GameObject({
     model: models.level,
-    texture: textures.target,
+    texture: textures.level,
+    normalTexture: textures.levelNormal,
+    shaders: levelShaders,
+    script: levelScript,
+    metallic: textures.levelMetallic,
   })
     .scale(50)
     .rotate({y: 90})

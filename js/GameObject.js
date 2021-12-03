@@ -23,6 +23,7 @@ class GameObject {
             this.shaders = params.shaders ? params.shaders : defaultShaders;
             this.collider = params.collider;
             this.normalTexture = params.normalTexture;
+            this.metallic = params.metallic;
             if (params.script) {
                 this.script = new params.script(this);
                 this.update = this.script.update;
