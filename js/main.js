@@ -286,6 +286,22 @@ onRender = () => {
     if (o.render) o.render(o);
   });
 
+  //detect left click for shooting
+  if(Input.left){ //change to Input.isKeyDown("left") when implemented
+    //TODO: detect if target hit
+
+    //if(<target hit>){
+        //score.updateScore(<hit>);
+    //}else{
+        //score.updateScore(<miss>);
+    //}
+
+    //play gunshot sound
+    gunshot = new Audio("assets/audio/gunshot.mp3");
+    gunshot.volume = 0.001; //avoid tinnitus
+    gunshot.play();
+  }
+
   // Input to test the destruction of objects.
   // Press t to destory a target and replace that with a new one, which proves that my targetRespawn works as intended.
   if (Input.isKeyDown("t")){
