@@ -36,28 +36,28 @@ class playerScript {
     // console.log(this.oThis.children[0].position[1]);
 
     // Player movement
-    if (Input.w)
+    if (Input.isKeyPressed("w"))
       this.oThis.translate(
         v3.multiply(forward, [this.speed * dt, 0, this.speed * dt]),
         true
       );
-    if (Input.s)
+    if (Input.isKeyPressed("s"))
       this.oThis.translate(
         v3.multiply(forward, [-this.speed * dt, 0, -this.speed * dt]),
         true
       );
-    if (Input.a)
+    if (Input.isKeyPressed("a"))
       this.oThis.translate(
         v3.multiply(right, [-this.speed * dt, 0, -this.speed * dt]),
         true
       );
-    if (Input.d)
+    if (Input.isKeyPressed("d"))
       this.oThis.translate(
         v3.multiply(right, [this.speed * dt, 0, this.speed * dt]),
         true
       );
 
-    if (Input.space && !this.jumping) {
+    if (Input.isKeyPressed("space") && !this.jumping) {
       this.jumping = true;
       this.velocity_y = this.JUMP_VELOCITY;
     }
@@ -68,7 +68,7 @@ class playerScript {
       this.oThis.translate([0, dx, 0], true);
     }
 
-    if (Input.shift && !this.jumping) {
+    if (Input.isKeyPressed("shift") && !this.jumping) {
       this.speed = this.speed_const * this.sprint_multiplier;
       //   console.log("sprint");
     } else if (!Input.shift && this.speed != this.speed_const) {
@@ -76,7 +76,7 @@ class playerScript {
     }
 
     if (!this.jumping) {
-      if (Input.c && this.oThis.position[1] >= 0.2 && !Input.shift) {
+      if (Input.isKeyPressed("c") && this.oThis.position[1] >= 0.2 && !Input.isKeyPressed("shift")) {
         let dx = this.crouch_speed * dt;
         this.oThis.translate([0, -dx, 0], true);
         if (this.oThis.position[1] < 0.2) {
@@ -85,7 +85,7 @@ class playerScript {
           this.oThis.setPosition([x, 0.2, z]);
         }
       }
-      if (!Input.c && this.oThis.position[1] < 1.0 && !Input.shift) {
+      if (!Input.isKeyPressed("c") && this.oThis.position[1] < 1.0 && !Input.isKeyPressed("shift")) {
         // console.log("up");
         let dx = this.crouch_speed * dt;
         this.oThis.translate([0, dx, 0], true);

@@ -9,7 +9,7 @@ class gui {
   }
 
   run = () => {
-    if (Input.p && showGui && Input.p == true && this.prevP == false) {
+    if (Input.isKeyPressed("p") && showGui && Input.isKeyPressed("p") == true && this.prevP == false) {
       canvas.requestPointerLock();
       console.log("closing result screen");
       const list = document.querySelectorAll(".result");
@@ -17,7 +17,7 @@ class gui {
         i.style.visibility = "hidden";
       }
       showGui = false;
-    } else if (Input.p && !showGui && Input.p == true && this.prevP == false) {
+    } else if (Input.isKeyPressed("p") && !showGui && Input.isKeyPressed("p") == true && this.prevP == false) {
       document.exitPointerLock();
       console.log("showing result screen");
       const list = document.querySelectorAll(".result");
@@ -26,6 +26,6 @@ class gui {
       }
       showGui = true;
     }
-    this.prevP = Input.p;
+    this.prevP = Input.isKeyPressed("p");
   };
 }
