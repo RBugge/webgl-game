@@ -1,17 +1,5 @@
 let isPointerLocked = false;
 let Input = {};
-Input.w = false;
-Input.a = false;
-Input.s = false;
-Input.d = false;
-Input.left = false;
-Input.right = false;
-Input.movementX = 0;
-Input.movementY = 0;
-Input.space = false;
-Input.c = false;
-Input.shift = false;
-Input.p = false;
 Input.updatePosition = () => { };
 
 let keymap = {
@@ -46,8 +34,6 @@ let keymap = {
 };
 
 Input.keys = {
-    left: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    right: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
     shift: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
     space: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
     a: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
@@ -78,14 +64,15 @@ Input.keys = {
     z: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false }
 }
 
-// Input to test the destruction of objects
-Input.t = false;
-Input.y = false;
-Input.u = false;
-Input.i = false;
-Input.o = false;
-Input.l = false;
-// Input to test the destruction of objects
+mouseMap = {
+    1: "left",
+    3: "right"
+}
+
+Input.mouse = {
+    left: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
+    right: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false }
+}
 
 initInput = () => {
     canvas.requestPointerLock =
@@ -135,25 +122,6 @@ onKeyDown = (e) => {
     }
 
     Input.keys[keymap[e.keyCode]].pressed = true;
-
-
-    // if (keymap[keyCode] == "w") Input.w = true;
-    // if (keyCode == 65) Input.a = true;
-    // if (keyCode == 83) Input.s = true;
-    // if (keyCode == 68) Input.d = true;
-    // if (keyCode == 32) Input.space = true;
-    // if (keyCode == 67) Input.c = true;
-    // if (keyCode == 16) Input.shift = true;
-    // if (keyCode == 80) Input.p = true;
-
-    // // Input to test the destruction of objects
-    // if (keyCode == 84) Input.t = true;
-    // if (keyCode == 89) Input.y = true;
-    // if (keyCode == 85) Input.u = true;
-    // if (keyCode == 73) Input.i = true;
-    // if (keyCode == 79) Input.o = true;
-    // if (keyCode == 76) Input.l = true;
-    // // Input to test the destruction of objects
 };
 
 onKeyUp = (e) => {
@@ -166,39 +134,33 @@ onKeyUp = (e) => {
             Input.keys[keymap[e.keyCode]].up = true;
     }
     Input.keys[keymap[e.keyCode]].pressed = false;
-
-
-    // let keyCode = e.keyCode;
-    // if (keyCode == 87) Input.w = false;
-    // if (keyCode == 65) Input.a = false;
-    // if (keyCode == 83) Input.s = false;
-    // if (keyCode == 68) Input.d = false;
-    // if (keyCode == 32) Input.space = false;
-    // if (keyCode == 67) Input.c = false;
-    // if (keyCode == 16) Input.shift = false;
-    // if (keyCode == 80) Input.p = false;
-
-    // // Input to test the destruction of objects
-    // if (keyCode == 84) Input.t = false;
-    // if (keyCode == 89) Input.y = false;
-    // if (keyCode == 85) Input.u = false;
-    // if (keyCode == 73) Input.i = false;
-    // if (keyCode == 79) Input.o = false;
-    // if (keyCode == 76) Input.l = false;
-    // // Input to test the destruction of objects
 };
 
 onMouseDown = (e) => {
-    if (e.which === 1) Input.left = true;
-    if (e.which === 3) Input.right = true;
+    if (mouseMap[e.which] === undefined) return;
+
+    if (!Input.mouse[mouseMap[e.which]].pressed){
+        if(Input.mouse[mouseMap[e.which]].downflag)
+            Input.mouse[mouseMap[e.which]].wait = true;
+        else
+            Input.mouse[mouseMap[e.which]].down = true;
+    }
+    Input.mouse[mouseMap[e.which]].pressed = true;
 };
 
 onMouseUp = (e) => {
-    if (e.which === 1) Input.left = false;
-    if (e.which === 3) Input.right = false;
+    if (mouseMap[e.which] === undefined) return;
+
+    if (Input.mouse[mouseMap[e.which]].pressed){
+        if(Input.mouse[mouseMap[e.which]].upflag)
+            Input.mouse[mouseMap[e.which]].wait = true;
+        else
+            Input.mouse[mouseMap[e.which]].up = true;
+    }
+    Input.mouse[mouseMap[e.which]].pressed = false;
 };
 
-Input.resetClicks = () => {
+Input.resetInput = () => {
     Object.keys(Input.keys).map(key => {
         if (Input.keys[key].wait) {
             if (Input.keys[key].downflag) Input.keys[key].down = true;
@@ -208,7 +170,18 @@ Input.resetClicks = () => {
             Input.keys[key].up = false;
         }
         Input.keys[key].wait = false;
-    })
+    });
+
+    Object.keys(Input.mouse).map(btn => {
+        if (Input.mouse[btn].wait) {
+            if (Input.mouse[btn].downflag) Input.mouse[btn].down = true;
+            if (Input.mouse[btn].downflag) Input.mouse[btn].up = true;
+        } else {
+            Input.mouse[btn].down = false;
+            Input.mouse[btn].up = false;
+        }
+        Input.mouse[btn].wait = false;
+    });
 }
 
 Input.isKeyPressed = (key) => {
@@ -225,4 +198,20 @@ Input.isKeyUp = (key) => {
     if (!Input.keys[key].up)
         Input.keys[key].upflag = true;
     return Input.keys[key].up;
+}
+
+Input.isMousePressed = (btn) => {
+    return Input.mouse[btn].pressed;
+}
+
+Input.isMouseDown = (btn) => {
+    if (!Input.mouse[btn].down)
+        Input.mouse[btn].downflag = true;
+    return Input.mouse[btn].down;
+}
+
+Input.isMouseUp = (btn) => {
+    if (!Input.mouse[btn].up)
+        Input.mouse[btn].upflag = true;
+    return Input.mouse[btn].up;
 }

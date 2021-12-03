@@ -14,7 +14,7 @@ class playerScript {
     this.oThis = oThis;
   }
 
-  start = () => {};
+  start = () => { };
 
   update = () => {
     // Check ahead one frame. Am I falling and about to go under 1?
@@ -71,7 +71,7 @@ class playerScript {
     if (Input.isKeyPressed("shift") && !this.jumping) {
       this.speed = this.speed_const * this.sprint_multiplier;
       //   console.log("sprint");
-      
+
     }
     else if (Input.isKeyPressed("shift") && this.jumping) {
       if (this.speed == (this.speed_const * this.sprint_multiplier))
@@ -79,7 +79,7 @@ class playerScript {
       else
         this.speed = this.speed_const;
       //   console.log("sprint");
-      
+
     }
     else if (!Input.shift && this.speed != this.speed_const) {
       this.speed = this.speed_const;
@@ -105,6 +105,22 @@ class playerScript {
           this.oThis.setPosition([x, 1.0, z]);
         }
       }
+    }
+
+    //detect left click for shooting
+    if (Input.isMouseDown("left")) { //change to Input.isKeyDown("left") when implemented
+      //TODO: detect if target hit
+
+      //if(<target hit>){
+      //score.updateScore(<hit>);
+      //}else{
+      //score.updateScore(<miss>);
+      //}
+
+      //play gunshot sound
+      let gunshot = new Audio("assets/audio/gunshot.mp3");
+      gunshot.volume = 0.001; //avoid tinnitus
+      gunshot.play();
     }
   };
 }
