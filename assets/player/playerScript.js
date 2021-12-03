@@ -31,10 +31,6 @@ class playerScript {
       }
     }
 
-    // console.log(this.jumping, this.velocity_y < 0);
-    // console.log(this.oThis.position[1]);
-    // console.log(this.oThis.children[0].position[1]);
-
     // Player movement
     if (Input.isKeyPressed("w"))
       this.oThis.translate(
@@ -70,16 +66,12 @@ class playerScript {
 
     if (Input.isKeyPressed("shift") && !this.jumping) {
       this.speed = this.speed_const * this.sprint_multiplier;
-      //   console.log("sprint");
-
     }
     else if (Input.isKeyPressed("shift") && this.jumping) {
       if (this.speed == (this.speed_const * this.sprint_multiplier))
         this.speed = this.speed_const * this.sprint_multiplier;
       else
         this.speed = this.speed_const;
-      //   console.log("sprint");
-
     }
     else if (!Input.shift && this.speed != this.speed_const) {
       this.speed = this.speed_const;
@@ -96,7 +88,6 @@ class playerScript {
         }
       }
       if (!Input.isKeyPressed("c") && this.oThis.position[1] < 1.0 && !Input.isKeyPressed("shift")) {
-        // console.log("up");
         let dx = this.crouch_speed * dt;
         this.oThis.translate([0, dx, 0], true);
         if (this.oThis.position[1] > 1.0) {

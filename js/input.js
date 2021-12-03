@@ -33,46 +33,14 @@ let keymap = {
     90: "z"
 };
 
-Input.keys = {
-    shift: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    space: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    a: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    b: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    c: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    d: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    e: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    f: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    g: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    h: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    i: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    j: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    k: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    l: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    m: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    n: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    o: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    p: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    q: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    r: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    s: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    t: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    u: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    v: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    w: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    x: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    y: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    z: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false }
-}
+Input.keys = {};
 
 mouseMap = {
     1: "left",
     3: "right"
-}
+};
 
-Input.mouse = {
-    left: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false },
-    right: { pressed: false, released: true, down: false, up: false, downflag: false, upflag: false, wait: false }
-}
+Input.mouse = {};
 
 initInput = () => {
     canvas.requestPointerLock =
@@ -90,6 +58,28 @@ initInput = () => {
 
     document.addEventListener("pointerlockchange", lockChangeAlert, false);
     document.addEventListener("mozpointerlockchange", lockChangeAlert, false);
+
+    Object.values(keymap).forEach((value) => {
+        Input.keys[value] = {
+            pressed: false,
+            down: false,
+            up: false,
+            downflag: false,
+            upflag: false,
+            wait: false
+        };
+    });
+
+    Object.values(mouseMap).forEach((value) => {
+        Input.mouse[value] = {
+            pressed: false,
+            down: false,
+            up: false,
+            downflag: false,
+            upflag: false,
+            wait: false
+        };
+    });
 };
 
 lockChangeAlert = () => {
@@ -139,8 +129,8 @@ onKeyUp = (e) => {
 onMouseDown = (e) => {
     if (mouseMap[e.which] === undefined) return;
 
-    if (!Input.mouse[mouseMap[e.which]].pressed){
-        if(Input.mouse[mouseMap[e.which]].downflag)
+    if (!Input.mouse[mouseMap[e.which]].pressed) {
+        if (Input.mouse[mouseMap[e.which]].downflag)
             Input.mouse[mouseMap[e.which]].wait = true;
         else
             Input.mouse[mouseMap[e.which]].down = true;
@@ -151,8 +141,8 @@ onMouseDown = (e) => {
 onMouseUp = (e) => {
     if (mouseMap[e.which] === undefined) return;
 
-    if (Input.mouse[mouseMap[e.which]].pressed){
-        if(Input.mouse[mouseMap[e.which]].upflag)
+    if (Input.mouse[mouseMap[e.which]].pressed) {
+        if (Input.mouse[mouseMap[e.which]].upflag)
             Input.mouse[mouseMap[e.which]].wait = true;
         else
             Input.mouse[mouseMap[e.which]].up = true;
