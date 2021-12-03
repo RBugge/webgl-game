@@ -71,7 +71,17 @@ class playerScript {
     if (Input.isKeyPressed("shift") && !this.jumping) {
       this.speed = this.speed_const * this.sprint_multiplier;
       //   console.log("sprint");
-    } else if (!Input.shift && this.speed != this.speed_const) {
+      
+    }
+    else if (Input.isKeyPressed("shift") && this.jumping) {
+      if (this.speed == (this.speed_const * this.sprint_multiplier))
+        this.speed = this.speed_const * this.sprint_multiplier;
+      else
+        this.speed = this.speed_const;
+      //   console.log("sprint");
+      
+    }
+    else if (!Input.shift && this.speed != this.speed_const) {
       this.speed = this.speed_const;
     }
 
