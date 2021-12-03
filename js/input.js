@@ -157,7 +157,7 @@ onKeyDown = (e) => {
 onKeyUp = (e) => {
 
     if (Input.keys[keymap[e.keyCode]].pressed) {
-        if (!Input.keys[keymap[e.keyCode]].upflag)
+        if (Input.keys[keymap[e.keyCode]].upflag)
             Input.keys[keymap[e.keyCode]].wait = true;
         else
             Input.keys[keymap[e.keyCode]].up = true;
