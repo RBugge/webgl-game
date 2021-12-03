@@ -341,10 +341,7 @@ onRender = () => {
 
   // Input to test the destruction of objects
   if (Input.isKeyDown("t")){
-    targets.push(targets[j].clone().setPosition([
-      (Math.random() < 0.5 ? -1 : 1) * (Math.random() * (-25) + 25),
-      (Math.random() < 0.5 ? -(Math.random() * (4)) + 1 : (Math.random() * (11) + 4)),
-      -(Math.random() * (15) + 15)]));
+    targetRespawn();
     targets[j].destroy();
     j++;
   }
@@ -360,3 +357,10 @@ onRender = () => {
   renderSkybox(skyboxProgramInfo);
   Input.resetClicks();
 };
+
+targetRespawn = () => {
+  targets.push(targets[j].clone().setPosition([
+    (Math.random() < 0.5 ? -1 : 1) * (Math.random() * (-25) + 25),
+    (Math.random() < 0.5 ? -(Math.random() * (4)) + 1 : (Math.random() * (11) + 4)),
+    -(Math.random() * (15) + 15)]));
+}
