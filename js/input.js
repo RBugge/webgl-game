@@ -125,6 +125,8 @@ updatePosition = (e) => {
 };
 
 onKeyDown = (e) => {
+    if (keymap[e.keyCode] === undefined) return;
+
     if (!Input.keys[keymap[e.keyCode]].pressed) {
         if (Input.keys[keymap[e.keyCode]].downflag)
             Input.keys[keymap[e.keyCode]].wait = true;
@@ -155,6 +157,7 @@ onKeyDown = (e) => {
 };
 
 onKeyUp = (e) => {
+    if (keymap[e.keyCode] === undefined) return;
 
     if (Input.keys[keymap[e.keyCode]].pressed) {
         if (Input.keys[keymap[e.keyCode]].upflag)
