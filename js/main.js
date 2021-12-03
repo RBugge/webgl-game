@@ -336,8 +336,11 @@ onRender = () => {
   });
 
   // Input to test the destruction of objects
-  if (Input.isKeyDown("t"))
-    targets[0].destroy();
+  if (Input.isKeyDown("t")){
+    targets[j].destroy();
+    j++;
+    if (j == 20) j = 0;
+  }
   // Input to test the destruction of objects
 
   // Clone/destroy test
