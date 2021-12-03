@@ -8,16 +8,7 @@ class cameraScript {
     start = () => { }
 
     update = () => {
-        // NOTICE: update vectors moved to main and player movement moved to playerScript
-        // let forward = v3.subtract(lookAt.position, this.oThis.position);
-        // forward[1] = 0;
-        // forward = v3.normalize(forward);
-        // let right = v3.cross(forward, [0,1,0]);
 
-        // if (Input.w) this.oThis.translate(v3.multiply(forward, [this.speed * dt, 0, this.speed * dt]), true);
-        // if (Input.s) this.oThis.translate(v3.multiply(forward, [-this.speed * dt, 0, -this.speed * dt]), true);
-        // if (Input.a) this.oThis.translate(v3.multiply(right, [-this.speed * dt, 0, -this.speed * dt]), true);
-        // if (Input.d) this.oThis.translate(v3.multiply(right, [this.speed * dt, 0, this.speed * dt]), true);
     }
 
     // Update the roation of camera with mouse movement

@@ -4,6 +4,12 @@ clamp = (num, min, max) => {
     return (num <= min) ? min : (num >= max) ? max : num;
 }
 
+hex2rgb = (hex) =>
+    (hex = hex.replace("#", ""))
+        .match(new RegExp("(.{" + hex.length / 3 + "})", "g"))
+        .map((l) => parseInt(hex.length % 2 ? l + l : l, 16) / 255);
+
+
 function importMat4() {
     const M4 = twgl.m4;
     M4.create = () =>

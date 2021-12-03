@@ -165,6 +165,7 @@ window.addEventListener("load", async function () {
     .addChild(camera)
     .setPosition([0, 1, 15]);
 
+  // Examples -----------------------------------------------------------------
   // Example Game Objects
   rayman = new GameObject({
     model: models.rayman,
@@ -193,13 +194,13 @@ window.addEventListener("load", async function () {
   rayman.translate([4, 0, 0], false).rotate({ z: 45 });
 
   // Destroy objects like this
-  // delete sphere.destroy();
+  // sphere.destroy();
 
   rayman
     .clone() // Returns the clone of the object
     .translate([-8, 0, 0], false);
 
-  cloneContainer = new GameObject();
+  // End Example --------------------------------------------------------------
 
   // Initial target spawning in random locations.
   /*
@@ -269,9 +270,6 @@ updateViewMatrix = () => {
 };
 
 // Clone/destroy test
-let prevTime = 0;
-let count = 0;
-let rad = Math.PI / 10;
 let j = 0;
 
 // Main Loop, called every frame
@@ -285,7 +283,7 @@ onRender = () => {
   projectionMatrix = m4.perspective(fov, aspect, near, far);
   updateViewMatrix();
 
-  // Update the forward and right vectors
+  // Update the forward, right, and aim vectors
   forward = v3.subtract(lookAt.position, camera.position);
   aimVector = v3.normalize(forward);
   forward[1] = 0;
@@ -306,12 +304,6 @@ onRender = () => {
     j++;
   }
 
-  // Clone/destroy test
-  // count++;
-  // if (count <= 370) {
-  //     sphere.clone(cloneContainer).translate([2 * Math.sin(2 * time), 2 * Math.cos(2 * time), count * (13 / 370)]);
-  // } else if (cloneContainer.children.at(-1)) delete cloneContainer.children.at(-1).destroy();
-  // else count = 0;
   menu.run();
   renderSkybox(skyboxProgramInfo);
   Input.resetInput();

@@ -33,15 +33,15 @@ let keymap = {
     90: "z"
 };
 
-Input.keys = {};
-
 mouseMap = {
     1: "left",
     3: "right"
 };
 
+Input.keys = {};
 Input.mouse = {};
 
+// Initialize the pointerlock/input event listeners and Input key/mouse objects
 initInput = () => {
     canvas.requestPointerLock =
         canvas.requestPointerLock || canvas.mozRequestPointerLock;
@@ -59,6 +59,7 @@ initInput = () => {
     document.addEventListener("pointerlockchange", lockChangeAlert, false);
     document.addEventListener("mozpointerlockchange", lockChangeAlert, false);
 
+    // Assign new properties to keys and mouse for each mapped key/button
     Object.values(keymap).forEach((value) => {
         Input.keys[value] = {
             pressed: false,
@@ -82,6 +83,7 @@ initInput = () => {
     });
 };
 
+// Add/remove the updatePosition function eventlistener when pointerlock is toggled
 lockChangeAlert = () => {
     if (
         document.pointerLockElement === canvas ||
@@ -95,12 +97,15 @@ lockChangeAlert = () => {
     }
 };
 
+// Calls the camera updateLookAt function whenever the mouse is moved
 updatePosition = (e) => {
     Input.movementX = e.movementX;
     Input.movementY = e.movementY;
     camera.script.updateLookAt();
 };
 
+
+// Functions to set pressed/down/up and wait if a flag is set
 onKeyDown = (e) => {
     if (keymap[e.keyCode] === undefined) return;
 
@@ -150,6 +155,10 @@ onMouseUp = (e) => {
     Input.mouse[mouseMap[e.which]].pressed = false;
 };
 
+
+// Resets the Inputs each frame to sync whether a key/button was pressed that frame
+// If an input event was registered after it was checked that frame, the value is
+//  set true for the beginning of the next frame.
 Input.resetInput = () => {
     Object.keys(Input.keys).map(key => {
         if (Input.keys[key].wait) {
@@ -174,6 +183,8 @@ Input.resetInput = () => {
     });
 }
 
+
+// Functions to check whether a key/button is pressed or released
 Input.isKeyPressed = (key) => {
     return Input.keys[key].pressed;
 }
