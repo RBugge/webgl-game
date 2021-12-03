@@ -177,6 +177,8 @@ class GameObject {
         clone.worldTranslation = this.worldTranslation;
         clone.position = this.position;
 
+        clone.modelMatrix = this.modelMatrix;
+
         this.children.forEach(child => child.clone(clone));
         if (newParent) newParent.addChild(clone);
         else if (this.parent) this.parent.addChild(clone);

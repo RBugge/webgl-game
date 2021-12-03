@@ -311,6 +311,7 @@ updateViewMatrix = () => {
 let prevTime = 0;
 let count = 0;
 let rad = Math.PI / 10;
+let j = 0;
 
 // Main Loop, called every frame
 onRender = () => {
@@ -337,6 +338,7 @@ onRender = () => {
 
   // Input to test the destruction of objects
   if (Input.isKeyDown("t")){
+    console.log(targets[j].transform)
     targets.push(targets[j].clone());
     targets[j].destroy();
     j++;
