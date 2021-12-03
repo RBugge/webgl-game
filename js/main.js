@@ -106,7 +106,7 @@ window.addEventListener("load", async function () {
       flipY: true,
     },
     level: {
-      src: repo + "assets/level/LevelPlaceholder.mtl",
+      src: repo + "assets/Textures/level_textures/Material_Base_color.png",
       flipY: true,
     },
   });
@@ -220,6 +220,7 @@ window.addEventListener("load", async function () {
     texture: textures.target,
   })
     .scale(50)
+    .rotate({y: 90})
     .setPosition([0, -5, 0]);
 
 
