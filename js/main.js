@@ -103,7 +103,7 @@ window.addEventListener("load", async function () {
       flipY: true,
     },
     targetNormal: {
-      src: "assets/Textures/target_textures/GrainyPlastic_Normal_OpenGL.png",
+      src:  repo + "assets/Textures/target_textures/GrainyPlastic_Normal_OpenGL.png",
       flipY: true,
     },
     level: {
