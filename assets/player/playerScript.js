@@ -3,7 +3,7 @@ class playerScript {
   speed_const = 10; // initial speed
   sprint_multiplier = 2;
 
-  crouch_speed = 5; // crouch down/up speed
+  crouch_transition_speed = 5; // crouch down/up speed
   JUMP_VELOCITY = 10; // initial velocity for jump
   g = 2 * -9.81; // gravity
 
@@ -14,7 +14,7 @@ class playerScript {
     this.oThis = oThis;
   }
 
-  start = () => { };
+  start = () => {};
 
   update = () => {
     // Check ahead one frame. Am I falling and about to go under 1?
@@ -64,22 +64,45 @@ class playerScript {
       this.oThis.translate([0, dx, 0], true);
     }
 
-    if (Input.isKeyPressed("shift") && !this.jumping) {
+    if (
+      Input.isKeyPressed("shift") &&
+      !this.jumping &&
+      !Input.isKeyPressed("c")
+    ) {
       this.speed = this.speed_const * this.sprint_multiplier;
-    }
-    else if (Input.isKeyPressed("shift") && this.jumping) {
-      if (this.speed == (this.speed_const * this.sprint_multiplier))
+      // console.log("run", this.speed);
+    } else if (Input.isKeyPressed("shift") && this.jumping) {
+      if (this.speed == this.speed_const * this.sprint_multiplier)
         this.speed = this.speed_const * this.sprint_multiplier;
-      else
-        this.speed = this.speed_const;
-    }
-    else if (!Input.shift && this.speed != this.speed_const) {
+      else this.speed = this.speed_const;
+      // console.log("run extra scenario", this.speed);
+    } else if (!Input.shift && this.speed != this.speed_const) {
       this.speed = this.speed_const;
     }
 
+    if (
+      Input.isKeyPressed("c") &&
+      !this.jumping &&
+      !Input.isKeyPressed("shift")
+    ) {
+      this.speed = this.speed_const / this.sprint_multiplier;
+      // console.log("crouch no run", this.speed);
+    } else if (
+      Input.isKeyPressed("c") &&
+      !this.jumping &&
+      Input.isKeyPressed("shift")
+    ) {
+      this.speed = this.speed_const;
+      // console.log("crouch run", this.speed);
+    }
+
     if (!this.jumping) {
-      if (Input.isKeyPressed("c") && this.oThis.position[1] >= 0.2 && !Input.isKeyPressed("shift")) {
-        let dx = this.crouch_speed * dt;
+      if (
+        Input.isKeyPressed("c") &&
+        this.oThis.position[1] >= 0.2 &&
+        !Input.isKeyPressed("shift")
+      ) {
+        let dx = this.crouch_transition_speed * dt;
         this.oThis.translate([0, -dx, 0], true);
         if (this.oThis.position[1] < 0.2) {
           let x = this.oThis.position[0];
@@ -87,8 +110,12 @@ class playerScript {
           this.oThis.setPosition([x, 0.2, z]);
         }
       }
-      if (!Input.isKeyPressed("c") && this.oThis.position[1] < 1.0 && !Input.isKeyPressed("shift")) {
-        let dx = this.crouch_speed * dt;
+      if (
+        !Input.isKeyPressed("c") &&
+        this.oThis.position[1] < 1.0 &&
+        !Input.isKeyPressed("shift")
+      ) {
+        let dx = this.crouch_transition_speed * dt;
         this.oThis.translate([0, dx, 0], true);
         if (this.oThis.position[1] > 1.0) {
           let x = this.oThis.position[0];
@@ -99,7 +126,8 @@ class playerScript {
     }
 
     //detect left click for shooting
-    if (Input.isMouseDown("left")) { //change to Input.isKeyDown("left") when implemented
+    if (Input.isMouseDown("left")) {
+      //change to Input.isKeyDown("left") when implemented
       //TODO: detect if target hit
 
       //if(<target hit>){
@@ -110,7 +138,7 @@ class playerScript {
 
       //play gunshot sound
       let gunshot = new Audio("assets/audio/gunshot.mp3");
-      gunshot.volume = 0.001; //avoid tinnitus
+      gunshot.volume = 0.1; //avoid tinnitus
       gunshot.play();
     }
   };

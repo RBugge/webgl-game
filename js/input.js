@@ -55,6 +55,7 @@ initInput = () => {
     window.addEventListener("keyup", onKeyUp, false);
     window.addEventListener("mousedown", onMouseDown, false);
     window.addEventListener("mouseup", onMouseUp, false);
+    window.addEventListener("wheel", onWheelScroll, false);
 
     document.addEventListener("pointerlockchange", lockChangeAlert, false);
     document.addEventListener("mozpointerlockchange", lockChangeAlert, false);
@@ -153,6 +154,25 @@ onMouseUp = (e) => {
             Input.mouse[mouseMap[e.which]].up = true;
     }
     Input.mouse[mouseMap[e.which]].pressed = false;
+};
+onWheelScroll = (e) => {
+    const LOOK_INCREMENT = 0.5;
+    // console.log(e.deltaY);
+    if (e.deltaY < 0) // mouse up
+    {
+        var look_sens = LOOK_SENSITIVITY + LOOK_INCREMENT;
+        LOOK_SENSITIVITY = look_sens; // no max.
+        // console.log(look_sens);
+    }
+    else if (e.deltaY > 0) // mouse down
+    {
+        var look_sens = LOOK_SENSITIVITY - LOOK_INCREMENT;
+        if (look_sens <= 1) // clamp at 1.
+            LOOK_SENSITIVITY = 1;
+        else
+            LOOK_SENSITIVITY = look_sens;
+        // console.log(look_sens);
+    }
 };
 
 

@@ -37,6 +37,7 @@ let canvas;
 
 let showGui = false;
 
+let LOOK_SENSITIVITY = 10; // global value to share
 const menu = new gui();
 
 let targets = [];

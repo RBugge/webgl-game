@@ -5,7 +5,7 @@ class cameraScript {
         this.oThis = oThis;
     }
 
-    start = () => { }
+    start = () => { this.lookSensitivity = LOOK_SENSITIVITY}
 
     update = () => {
 
@@ -23,9 +23,10 @@ class cameraScript {
             x: xRot,
         })
 
-
         camera.parent ?
             camera.parent.rotate({ y: -deg2rad(this.lookSensitivity * Input.movementX) }) :
             camera.rotate({ y: -deg2rad(this.lookSensitivity * Input.movementX) });
+
+        this.lookSensitivity = LOOK_SENSITIVITY
     }
 }
