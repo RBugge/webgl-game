@@ -336,8 +336,11 @@ onRender = () => {
   });
   
   // Input to test the destruction of objects
-  if (Input.t)
-      target0.destroy();
+  if (Input.t){
+    targets[j].destroy();
+    j++;
+    if (j == 20) j = 0;
+  }
   if (Input.y)
       target1.destroy();
   if (Input.u)
