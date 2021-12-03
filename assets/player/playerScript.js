@@ -99,8 +99,7 @@ class playerScript {
     if (!this.jumping) {
       if (
         Input.isKeyPressed("c") &&
-        this.oThis.position[1] >= 0.2 &&
-        !Input.isKeyPressed("shift")
+        this.oThis.position[1] >= 0.2
       ) {
         let dx = this.crouch_transition_speed * dt;
         this.oThis.translate([0, -dx, 0], true);
@@ -112,8 +111,7 @@ class playerScript {
       }
       if (
         !Input.isKeyPressed("c") &&
-        this.oThis.position[1] < 1.0 &&
-        !Input.isKeyPressed("shift")
+        this.oThis.position[1] < 1.0
       ) {
         let dx = this.crouch_transition_speed * dt;
         this.oThis.translate([0, dx, 0], true);
