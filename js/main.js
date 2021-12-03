@@ -119,14 +119,9 @@ window.addEventListener("load", async function () {
     cube: createSCs(await loadOBJ(repo + "assets/default/cube.obj")),
     rayman: createSCs(await loadOBJ(repo + "assets/rayman/raymanModel.obj")),
     boy: createSCs(await loadOBJ(repo + "assets/boy/BoyOBJ.obj")),
-    revolver: createSCs(
-      await loadOBJ(repo + "assets/revolver/revolverNoSight.obj")
-    ),
-
-    // Testing the target spawn
+    revolver: createSCs(await loadOBJ(repo + "assets/revolver/revolverNoSight.obj")),
     target: createSCs(await loadOBJ(repo + "assets/target/Target.obj")),
     level: createSCs(await loadOBJ(repo + "assets/level/LevelPlaceholder.obj")),
-    // Testing the target spawn
   };
 
   // Camera object with lookAt as child
@@ -198,56 +193,12 @@ window.addEventListener("load", async function () {
 
   cloneContainer = new GameObject();
 
-  // Testing the target spawn
-  //   target0 = new GameObject({
-  //       model: models.target,
-  //       texture: textures.target,
-  //       normalTexture: textures.targetNormal,
-  //       shaders: targetShadersAlt,
-  //   })
-  //       .rotate({x: 90})
-  //       .setPosition([0, 3, -15]);
-  //   target1 = new GameObject({
-  //       model: models.target,
-  //       texture: textures.target,
-  //       normalTexture: textures.targetNormal,
-  //       shaders: targetShadersAlt,
-  //   })
-  //       .rotate({x: 90})
-  //       .setPosition([0, 7, -15]);
-  //   target2 = new GameObject({
-  //       model: models.target,
-  //       texture: textures.target,
-  //       normalTexture: textures.targetNormal,
-  //       shaders: targetShadersAlt,
-  //   })
-  //       .rotate({x: 90})
-  //       .setPosition([-5, 4, -15]);
-  //   target3 = new GameObject({
-  //       model: models.target,
-  //       texture: textures.target,
-  //       normalTexture: textures.targetNormal,
-  //       shaders: targetShadersAlt,
-  //   })
-  //       .rotate({x: 90})
-  //       .setPosition([5, 4, -15]);
-  //   target4 = new GameObject({
-  //       model: models.target,
-  //       texture: textures.target,
-  //       normalTexture: textures.targetNormal,
-  //       shaders: targetShadersAlt,
-  //   })
-  //       .rotate({x: 90})
-  //       .setPosition([-2.5, -1, -15]);
-  //   target5 = new GameObject({
-  //       model: models.target,
-  //       texture: textures.target,
-  //       normalTexture: textures.targetNormal,
-  //       shaders: targetShadersAlt,
-  //   })
-  //       .rotate({x: 90})
-  //       .setPosition([2.5, -1, -15]);
-
+  // Initial target spawning in random locations.
+  /*
+      positive x will move target to the right, negative x to the left
+      positive y will move target to up, negative y down
+      positive z will move target behind player, negative in front
+   */
   for (let i = 0; i < 20; i++) {
     target = new GameObject({
       model: models.target,
@@ -270,12 +221,7 @@ window.addEventListener("load", async function () {
   })
     .scale(50)
     .setPosition([0, -5, 0]);
-  /*
-        positive x will move target to the right, negative x to the left
-        positive y will move target to up, negative y down
-        positive z will move target behind player, negative in front
-     */
-  // Testing the target spawn
+
 
   // start render loop
   gameLoop = new GameLoop(onRender).start();
@@ -339,13 +285,13 @@ onRender = () => {
     if (o.render) o.render(o);
   });
 
-  // Input to test the destruction of objects
+  // Input to test the destruction of objects.
+  // Press t to destory a target and replace that with a new one, which proves that my targetRespawn works as intended.
   if (Input.isKeyDown("t")){
     targetRespawn();
     targets[j].destroy();
     j++;
   }
-  // Input to test the destruction of objects
 
   // Clone/destroy test
   // count++;
