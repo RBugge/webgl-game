@@ -337,6 +337,7 @@ onRender = () => {
 
   // Input to test the destruction of objects
   if (Input.isKeyDown("t")){
+    targets.push(targets[j].clone());
     targets[j].destroy();
     j++;
     if (j == 20) j = 0;
