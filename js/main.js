@@ -254,6 +254,7 @@ window.addEventListener("load", async function () {
       texture: textures.target,
       normalTexture: textures.targetNormal,
       shaders: targetShadersAlt,
+      script: targetScript,
     })
       .rotate({ x: 90 })
       .setPosition([
