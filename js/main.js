@@ -5,6 +5,8 @@ let quadBufferInfo;
 let v3 = twgl.v3;
 let m4 = twgl.m4;
 let mat4;
+
+const running = false;
 const loader = new THREE.OBJLoader();
 
 let fov = deg2rad(60);
@@ -339,7 +341,11 @@ targetRespawn = () => {
     ]);
 };
 function countdownTimer() {
+  console.log("value of running is", running);
+  if (running == true) return;
+  running = true;
   setTimeout(function () {
+    running = false;
     console.log("Times up.");
     RESULT_SCORE.finalScore();
     showGui = true;
