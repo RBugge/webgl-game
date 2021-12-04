@@ -143,7 +143,7 @@ window.addEventListener("load", async function () {
       await loadOBJ(repo + "assets/revolver/revolverNoSight.obj")
     ),
     target: createSCs(await loadOBJ(repo + "assets/target/Target.obj")),
-    level: createSCs(await loadOBJ("assets/level/levelPaint.obj")),
+    level: createSCs(await loadOBJ(repo + "assets/level/levelPaint.obj")),
   };
   modelsGlobal = models;
 
@@ -209,51 +209,53 @@ window.addEventListener("load", async function () {
 
   // Destroy objects like this
   // sphere.destroy();
-  sphere
-    .addChild(rayman)
-    .setPosition([0, 0, 50]);
+  sphere.addChild(rayman).setPosition([0, 0, 50]);
   rayman
     .clone() // Returns the clone of the object
     .translate([-8, 0, 0], false);
-// End Example --------------------------------------------------------------
+  // End Example --------------------------------------------------------------
 
-// Initial target spawning in random locations.
-/*
+  // Initial target spawning in random locations.
+  /*
     positive x will move target to the right, negative x to the left
     positive y will move target to up, negative y down
     positive z will move target behind player, negative in front
  */
-targets = new GameObject();
-for (let i = 0; i < 20; i++) {
-  targets.addChild(new GameObject({
-    model: models.target,
-    texture: textures.target,
-    normalTexture: textures.targetNormal,
-    shaders: targetShadersAlt,
-    script: targetScript,
+  targets = new GameObject();
+  for (let i = 0; i < 20; i++) {
+    targets.addChild(
+      new GameObject({
+        model: models.target,
+        texture: textures.target,
+        normalTexture: textures.targetNormal,
+        shaders: targetShadersAlt,
+        script: targetScript,
+      })
+        .rotate({ x: 90 })
+        .setPosition([
+          (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
+          Math.random() < 0.5
+            ? -(Math.random() * 4) + 1
+            : Math.random() * 11 + 4,
+          -(Math.random() * 15 + 15),
+        ])
+    );
+  }
+
+  level = new GameObject({
+    model: models.level,
+    texture: textures.level,
+    normalTexture: textures.levelNormal,
+    shaders: levelShaders,
+    script: levelScript,
+    metallic: textures.levelMetallic,
   })
-    .rotate({ x: 90 })
-    .setPosition([
-      (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
-      Math.random() < 0.5 ? -(Math.random() * 4) + 1 : Math.random() * 11 + 4,
-      -(Math.random() * 15 + 15),
-    ]));
-}
+    .scale(55)
+    .rotate({ y: 90 })
+    .setPosition([0, 7, 0]);
 
-level = new GameObject({
-  model: models.level,
-  texture: textures.level,
-  normalTexture: textures.levelNormal,
-  shaders: levelShaders,
-  script: levelScript,
-  metallic: textures.levelMetallic,
-})
-  .scale(55)
-  .rotate({ y: 90 })
-  .setPosition([0, 7, 0]);
-
-// start render loop
-gameLoop = new GameLoop(onRender).start();
+  // start render loop
+  gameLoop = new GameLoop(onRender).start();
 });
 
 renderSkybox = (skyboxProgramInfo) => {
