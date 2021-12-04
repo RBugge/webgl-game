@@ -44,7 +44,6 @@ let LOOK_SENSITIVITY = 10; // global value to share
 const GUI = new gui();
 
 let targets;
-let bullets = [];
 let modelsGlobal = null;
 
 const repo = "https://raw.githubusercontent.com/RBugge/webgl-game/main/";
@@ -123,10 +122,6 @@ window.addEventListener("load", async function () {
     },
     levelMetallic: {
       src: repo + "assets/Textures/level_textures/Platform_Metallic.png",
-      flipY: true,
-    },
-    bullet: {
-      src: repo + "assets/Textures/revolver_textures/Bullet.png",
       flipY: true,
     },
   });
