@@ -338,10 +338,11 @@ targetRespawn = () => {
       -(Math.random() * 15 + 15),
     ]);
 };
-countdownTimer = () => {
+function countdownTimer() {
   setTimeout(function () {
     console.log("Times up.");
     RESULT_SCORE.finalScore();
     showGui = true;
-  }, 500);
-};
+    openResultMenu();
+  }, 15000);
+}

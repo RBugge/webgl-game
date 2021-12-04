@@ -29,10 +29,12 @@ class score {
   finalScore = () => {
     accuracy = (hit / shotsFired) * 100; //percentage of shots hit
     miss = shotsFired - hit; //calculate missed targets
-    document.getElementById("hit").innerHTML = `Targets Hit: ${hit}`;
-    document.getElementById("missed").innerHTML = `Targets Missed: ${miss}`;
+    document.getElementById("hit").innerHTML = `Targets Hit: ${this.hit}`;
+    document.getElementById(
+      "missed"
+    ).innerHTML = `Targets Missed: ${this.miss}`;
     document.getElementById(
       "accuracy"
-    ).innerHTML = `Targets Missed: ${accuracy}`;
+    ).innerHTML = `Targets Missed: ${this.accuracy}`;
   };
 }
