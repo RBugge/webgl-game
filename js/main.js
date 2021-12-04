@@ -38,6 +38,8 @@ let canvas;
 let showGui = false;
 let showMenu = true;
 
+let difficulty = "easy";
+
 let LOOK_SENSITIVITY = 10; // global value to share
 const GUI = new gui();
 

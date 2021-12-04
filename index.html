@@ -290,6 +290,7 @@
             <div id="difficultySelect">
               <ul class="no-bullets">
                 <li
+                  onclick="setEasy()"
                   style="
                     opacity: 100%;
                     color: #fff;
@@ -297,11 +298,14 @@
                     font-size: 40px;
                     display: inline;
                     margin: 0px 20px;
+                    cursor: pointer;
                   "
+                  id="easyDifficulty"
                 >
                   Easy
                 </li>
                 <li
+                  onclick="setMedium()"
                   style="
                     opacity: 100%;
                     color: #fff;
@@ -309,11 +313,14 @@
                     font-size: 40px;
                     display: inline;
                     margin: 0px 20px;
+                    cursor: pointer;
                   "
+                  id="mediumDifficulty"
                 >
                   Medium
                 </li>
                 <li
+                  onclick="setHard()"
                   style="
                     opacity: 100%;
                     color: #fff;
@@ -321,7 +328,9 @@
                     font-size: 40px;
                     display: inline;
                     margin: 0px 20px;
+                    cursor: pointer;
                   "
+                  id="hardDifficulty"
                 >
                   Hard
                 </li>
@@ -367,7 +376,7 @@
           "
           id="play_button"
           type="button"
-          onclick="console.log('start')"
+          onclick="closeMainMenu()"
         >
           Play
         </button>

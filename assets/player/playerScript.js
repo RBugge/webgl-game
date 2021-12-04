@@ -97,10 +97,7 @@ class playerScript {
     }
 
     if (!this.jumping) {
-      if (
-        Input.isKeyPressed("c") &&
-        this.oThis.position[1] >= 0.2
-      ) {
+      if (Input.isKeyPressed("c") && this.oThis.position[1] >= 0.2) {
         let dx = this.crouch_transition_speed * dt;
         this.oThis.translate([0, -dx, 0], true);
         if (this.oThis.position[1] < 0.2) {
@@ -109,10 +106,7 @@ class playerScript {
           this.oThis.setPosition([x, 0.2, z]);
         }
       }
-      if (
-        !Input.isKeyPressed("c") &&
-        this.oThis.position[1] < 1.0
-      ) {
+      if (!Input.isKeyPressed("c") && this.oThis.position[1] < 1.0) {
         let dx = this.crouch_transition_speed * dt;
         this.oThis.translate([0, dx, 0], true);
         if (this.oThis.position[1] > 1.0) {
@@ -124,7 +118,7 @@ class playerScript {
     }
 
     //detect left click for shooting
-    if (Input.isMouseDown("left")) {
+    if (Input.isMouseDown("left") && !showMenu) {
       //change to Input.isKeyDown("left") when implemented
       //TODO: detect if target hit
 
