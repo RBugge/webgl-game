@@ -13,7 +13,7 @@ class GameObject {
     position = [0, 0, 0];
     modelMatrix = m4.identity();
     modelDim = { dia: 1 };
-    modelDiameter = 1;
+    diameter = 1;
     destroyed = false;
 
     constructor(params) {
