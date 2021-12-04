@@ -16,6 +16,7 @@ class gui {
     showGui = false;
     showMenu = true;
     setEasy();
+    setCrosshair(0, true, this);
   }
 
   run = () => {
@@ -48,25 +49,16 @@ class gui {
     }
     this.prevP = Input.isKeyPressed("p");
 
-    if (
-      Input.isKeyPressed("m") &&
-      showMenu &&
-      Input.isKeyPressed("m") == true &&
-      this.prevM == false
-    ) {
+    if (Input.isKeyPressed("m") && showMenu && this.prevM == false) {
       canvas.requestPointerLock();
       console.log("closing main menu screen");
       const list2 = document.querySelectorAll(".main_menu");
       for (let i of list2) {
         i.style.visibility = "hidden";
       }
+      showCrosshair();
       showMenu = false;
-    } else if (
-      Input.isKeyPressed("m") &&
-      !showMenu &&
-      Input.isKeyPressed("m") == true &&
-      this.prevM == false
-    ) {
+    } else if (Input.isKeyPressed("m") && !showMenu && this.prevM == false) {
       document.exitPointerLock();
       console.log("showing main menu screen");
       const list2 = document.querySelectorAll(".main_menu");
@@ -74,6 +66,7 @@ class gui {
         i.style.visibility = "visible";
       }
       showMenu = true;
+      hideCrosshair();
     }
 
     this.prevM = Input.isKeyPressed("m");
@@ -110,10 +103,21 @@ function closeMainMenu() {
     i.style.visibility = "hidden";
   }
   showMenu = false;
-  document.getElementById("crosshair").style.visibility = "visible";
-  (document.getElementById("crosshair").src =
-    repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png"),
-    canvas.requestPointerLock();
+  document.getElementById("crosshair").src =
+    repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
+  showCrosshair();
+  canvas.requestPointerLock();
+}
+
+function openMenu() {
+  hideCrosshair();
+  document.exitPointerLock();
+  const list2 = document.querySelectorAll(".main_menu");
+  for (let i of list2) {
+    i.style.visibility = "visible";
+  }
+  showMenu = true;
+  document.getElementById("crosshair").src = "";
 }
 
 function setEasy() {
@@ -134,12 +138,31 @@ function setHard() {
   document.getElementById("hardDifficulty").style.color = "#f99e1a";
   difficulty = "hard";
 }
-function setCrosshair(val) {
-  GUI.crosshair = parseInt(val);
-  console.log(GUI.crosshair);
-  for (let i = 0; i < 12; i++) {
-    document.getElementById("crosshair" + i).style.backgroundColor =
-      "transparent";
+
+function setCrosshair(val, useSelf, self) {
+  if (useSelf) {
+    self.crosshair = parseInt(val);
+    console.log(self.crosshair);
+  } else {
+    GUI.crosshair = parseInt(val);
+    console.log(GUI.crosshair);
   }
-  document.getElementById("crosshair" + val).style.backgroundColor = "#fff";
+
+  // console.log(document.getElementById("crosshair1").childNodes[1]);
+  for (let i = 0; i < 12; i++) {
+    document.getElementById(
+      "crosshair" + i
+    ).childNodes[1].style.backgroundColor = "transparent";
+  }
+  document.getElementById(
+    "crosshair" + val
+  ).childNodes[1].style.backgroundColor = "#fff";
+}
+
+function hideCrosshair() {
+  document.getElementById("crosshair").style.visibility = "hidden";
+}
+
+function showCrosshair() {
+  document.getElementById("crosshair").style.visibility = "visible";
 }
