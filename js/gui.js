@@ -41,6 +41,7 @@ class gui {
     ) {
       document.exitPointerLock();
       console.log("showing result screen");
+
       const list = document.querySelectorAll(".result");
       for (let i of list) {
         i.style.visibility = "visible";
@@ -57,6 +58,7 @@ class gui {
         i.style.visibility = "hidden";
       }
       showCrosshair();
+      countdownTimer();
       showMenu = false;
     } else if (Input.isKeyPressed("m") && !showMenu && this.prevM == false) {
       document.exitPointerLock();
@@ -107,6 +109,7 @@ function closeMainMenu() {
   document.getElementById("crosshair").src =
     repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
   showCrosshair();
+  countdownTimer();
   canvas.requestPointerLock();
 }
 
@@ -132,6 +135,7 @@ function openMenu() {
   }
   showMenu = true;
   showGui = false;
+
   document.getElementById("crosshair").src = "";
 }
 
