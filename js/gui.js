@@ -112,7 +112,7 @@ function closeMainMenu() {
   showMenu = false;
   document.getElementById("crosshair").style.visibility = "visible";
   (document.getElementById("crosshair").src =
-    repo + "assets/Textures/crosshairs/" + crosshair + ".png"),
+    repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png"),
     canvas.requestPointerLock();
 }
 
