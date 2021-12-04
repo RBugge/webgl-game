@@ -20,21 +20,19 @@ class score {
       ////TODO: detect when object is not destroyed (currently testing using character)
       this.shotsFired++;
       document.getElementById("missed").innerHTML = `Targets Missed: ${
-        shotsFired - hit
+        this.shotsFired - this.hit
       }`;
     }
   };
 
   //calculates final score
   finalScore = () => {
-    accuracy = (hit / shotsFired) * 100; //percentage of shots hit
-    miss = shotsFired - hit; //calculate missed targets
+    accuracy = Math.round((this.hit / this.shotsFired) * 100); //percentage of shots hit
+    miss = this.shotsFired - this.hit; //calculate missed targets
     document.getElementById("hit").innerHTML = `Targets Hit: ${this.hit}`;
-    document.getElementById(
-      "missed"
-    ).innerHTML = `Targets Missed: ${this.miss}`;
+    document.getElementById("missed").innerHTML = `Targets Missed: ${miss}`;
     document.getElementById(
       "accuracy"
-    ).innerHTML = `Targets Missed: ${this.accuracy}`;
+    ).innerHTML = `Accuracy: ${accuracy} percent`;
   };
 }
