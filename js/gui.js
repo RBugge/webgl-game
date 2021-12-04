@@ -59,6 +59,7 @@ class gui {
         i.style.visibility = "hidden";
       }
       showCrosshair();
+      countdownTimer();
       document.getElementById("crosshair").src =
         repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
       showMenu = false;
