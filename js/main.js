@@ -112,15 +112,15 @@ window.addEventListener("load", async function () {
       flipY: true,
     },
     level: {
-      src: repo + "assets/Textures/level_textures/Material_Base_color.png",
+      src: repo + "assets/Textures/level_textures/Platform_Base_color.png",
       flipY: true,
     },
     levelNormal: {
-      src: repo + "assets/Textures/level_textures/Material_Normal_OpenGL.png",
+      src: repo + "assets/Textures/level_textures/Platform_Normal_OpenGL.png",
       flipY: true,
     },
     levelMetallic: {
-      src: repo + "assets/Textures/level_textures/Material_Metallic.png",
+      src: repo + "assets/Textures/level_textures/Platform_Metallic.png",
       flipY: true,
     },
     bullet: {
@@ -141,7 +141,7 @@ window.addEventListener("load", async function () {
       await loadOBJ(repo + "assets/revolver/revolverNoSight.obj")
     ),
     target: createSCs(await loadOBJ(repo + "assets/target/Target.obj")),
-    level: createSCs(await loadOBJ(repo + "assets/level/LevelPlaceholder.obj")),
+    level: createSCs(await loadOBJ("assets/level/levelPaint.obj")),
   };
   modelsGlobal = models;
 
@@ -247,7 +247,7 @@ window.addEventListener("load", async function () {
   })
     .scale(50)
     .rotate({ y: 90 })
-    .setPosition([0, -5, 0]);
+    .setPosition([0, 0, 0]);
 
   // start render loop
   gameLoop = new GameLoop(onRender).start();
