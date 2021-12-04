@@ -13,6 +13,7 @@ class GameObject {
     position = [0, 0, 0];
     modelMatrix = m4.identity();
     modelDim = { dia: 1 };
+    modelDiameter = 1;
     destroyed = false;
 
     constructor(params) {
@@ -48,6 +49,7 @@ class GameObject {
             // Recompute model extents
             this.modelDim = computeModelExtent(this.model);
             this.setModelMatrix();
+            this.modelDiameter = this.modelDim.dia;
 
             if (params.center) this.setPosition(modelCenter);
 
@@ -109,6 +111,7 @@ class GameObject {
             temp.push(parseFloat(Number(Math.round(parseFloat(val + 'e' + 2)) + 'e-' + 2).toFixed(2)))
         );
         this.position = temp;
+        this.modelDiameter = this.modelDim.dia * this.transform.Scale;
     }
 
     // Accumulate translations, set world to true to translate in world space

@@ -219,23 +219,41 @@ window.addEventListener("load", async function () {
  */
   targets = new GameObject();
   for (let i = 0; i < 20; i++) {
-    targets.addChild(
-      new GameObject({
-        model: models.target,
-        texture: textures.target,
-        normalTexture: textures.targetNormal,
-        shaders: targetShadersAlt,
-        script: targetScript,
-      })
-        .rotate({ x: 90 })
-        .setPosition([
-          (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
-          Math.random() < 0.5
-            ? -(Math.random() * 4) + 1
-            : Math.random() * 11 + 4,
-          -(Math.random() * 15 + 15),
-        ])
-    );
+    let newTarget = new GameObject({
+      model: models.target,
+      texture: textures.target,
+      normalTexture: textures.targetNormal,
+      shaders: targetShadersAlt,
+      script: targetScript,
+    })
+      .rotate({ x: 90 })
+      .setPosition([
+        (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
+        Math.random() < 0.5
+          ? -(Math.random() * 4) + 1
+          : Math.random() * 11 + 4,
+        -(Math.random() * 15 + 15),
+      ]);
+
+    let temp = true;
+    while (temp) {
+      temp = false;
+      for (let t of targets.children) {
+        if (targetIntersect(t, newTarget)) {
+          newTarget.setPosition([
+            (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
+            Math.random() < 0.5
+              ? -(Math.random() * 4) + 1
+              : Math.random() * 11 + 4,
+            -(Math.random() * 15 + 15),
+          ]);
+          temp = true;
+          break;
+        }
+      };
+    };
+
+    targets.addChild(newTarget);
   }
 
   level = new GameObject({
@@ -330,14 +348,34 @@ onRender = () => {
 };
 
 targetRespawn = () => {
-  targets.children[j]
+  let newTarget = targets.children[j]
     .clone()
     .setPosition([
       (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
       Math.random() < 0.5 ? -(Math.random() * 4) + 1 : Math.random() * 11 + 4,
       -(Math.random() * 15 + 15),
     ]);
+
+    let temp = true;
+    while (temp) {
+      temp = false;
+      for (let t of targets.children) {
+        if (targetIntersect(t, newTarget)) {
+          newTarget.setPosition([
+            (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
+            Math.random() < 0.5
+              ? -(Math.random() * 4) + 1
+              : Math.random() * 11 + 4,
+            -(Math.random() * 15 + 15),
+          ]);
+          temp = true;
+          break;
+        }
+      };
+    };
+
 };
+
 function countdownTimer() {
   setTimeout(function () {
     console.log("Times up.");
