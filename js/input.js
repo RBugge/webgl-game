@@ -4,6 +4,7 @@ Input.updatePosition = () => { };
 
 let keymap = {
     16: "shift",
+    27: "escape",
     32: "space",
     65: "a",
     66: "b",
