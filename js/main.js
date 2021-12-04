@@ -40,13 +40,13 @@ let showMenu = true;
 
 let difficulty = "easy";
 
+const repo = "https://raw.githubusercontent.com/RBugge/webgl-game/main/";
+
 let LOOK_SENSITIVITY = 10; // global value to share
 const GUI = new gui();
 
 let targets;
 let modelsGlobal = null;
-
-const repo = "https://raw.githubusercontent.com/RBugge/webgl-game/main/";
 
 /** @type {WebGLRenderingContext} */
 window.addEventListener("load", async function () {

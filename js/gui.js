@@ -157,12 +157,17 @@ function setHard() {
 }
 
 function setCrosshair(val, useSelf, self) {
+  // console.log(useSelf, self);
   if (useSelf) {
     self.crosshair = parseInt(val);
     console.log(self.crosshair);
+    document.getElementById("crosshair").src =
+      repo + "assets/Textures/crosshairs/" + self.crosshair + ".png";
   } else {
     GUI.crosshair = parseInt(val);
     console.log(GUI.crosshair);
+    document.getElementById("crosshair").src =
+      repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
   }
 
   // console.log(document.getElementById("crosshair1").childNodes[1]);
