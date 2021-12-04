@@ -1,13 +1,10 @@
-//bounds of target:
-//x = [-15, 15]
-//y = [-1, 15] 
-//z = [-15, -30] 
-
 //detects if a target is intersecting another
 targetIntersect = (target1, target2) => {
 
     //calculate distance between target1 and target2
-    let distance = (target1.position[0]-target2.position[0])*(target1.position[0]-target2.position[0]) + (target1.position[1]-target2.position[1])*(target1.position[1]-target2.position[1]);
+    let distance =
+    (target1.position[0]-target2.position[0])*(target1.position[0]-target2.position[0])
+    + (target1.position[1]-target2.position[1])*(target1.position[1]-target2.position[1]);
 
     //if the distance between the targets is less than the diameter (2*r) of a target then they are intersecting
     if(target1.transform.Scale.x > 1){ //account for scale of target
@@ -30,15 +27,15 @@ checkCollision = () => {
     let target1, target2;
 
     //reset collision flags for every target
-    for(let i = 0; i < targets.length; i++){
-        targets[i].isColliding = false;
+    for(let i = 0; i < targets.children.length; i++){
+        targets.children[i].isColliding = false;
     }
 
     //check for collisions
-    for(let i = 0; i < targets.length; i++){ //iterate through all of targets
-        target1 = targets[i];
-        for(let j = i+1; j < targets.length; j++){ //iterate through the rest of the targets
-            target2 = targets[j];
+    for(let i = 0; i < targets.children.length; i++){ //iterate through all of targets
+        target1 = targets.children[i];
+        for(let j = i+1; j < targets.children.length; j++){ //iterate through the rest of the targets
+            target2 = targets.children[j];
             if(targetIntersect(target1, target2)){ //if they intersect set isColliding to true
                 target1.isColliding = true;
                 target2.isColliding = true;
@@ -68,14 +65,14 @@ class targetScript {
 
     //movement logic for targets
     update = () => {
-        
+
         checkCollision(); //check for collisions
 
         if(this.oThis.isColliding){ //if collision is detected
             this.oThis.positiveX = !this.oThis.positiveX; //reverse x direction
             this.oThis.positiveY = !this.oThis.positiveY; //reverse y direction
         }
-        
+
         //check if the targets will go out of bounds and reverse direction if they will (collision detection with borders)
         if(this.oThis.positiveX && (this.oThis.position[0]*1.05 >= 35)){ //check next iteration of translate
             this.oThis.positiveX = false; //reverse x direction
@@ -97,7 +94,7 @@ class targetScript {
         }else{
             this.oThis.translate([-0.05, -0.05, 0], true);
         }
-        
+
     }
 
 }

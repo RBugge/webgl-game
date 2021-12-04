@@ -62,7 +62,7 @@ initInput = () => {
     document.addEventListener("mozpointerlockchange", lockChangeAlert, false);
 
     // Assign new properties to keys and mouse for each mapped key/button
-    Object.values(keymap).forEach((value) => {
+    Object.values(keymap).forEach(value => {
         Input.keys[value] = {
             pressed: false,
             down: false,
@@ -73,7 +73,7 @@ initInput = () => {
         };
     });
 
-    Object.values(mouseMap).forEach((value) => {
+    Object.values(mouseMap).forEach(value => {
         Input.mouse[value] = {
             pressed: false,
             down: false,
