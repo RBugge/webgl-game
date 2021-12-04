@@ -57,6 +57,8 @@ class gui {
         i.style.visibility = "hidden";
       }
       showCrosshair();
+      document.getElementById("crosshair").src =
+        repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
       showMenu = false;
     } else if (Input.isKeyPressed("m") && !showMenu && this.prevM == false) {
       document.exitPointerLock();
