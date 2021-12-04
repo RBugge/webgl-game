@@ -6,7 +6,7 @@ let v3 = twgl.v3;
 let m4 = twgl.m4;
 let mat4;
 
-const running = false;
+let running = false;
 const loader = new THREE.OBJLoader();
 
 let fov = deg2rad(60);
