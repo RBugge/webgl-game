@@ -132,6 +132,8 @@ class playerScript {
       let gunshot = new Audio("assets/audio/gunshot.mp3");
       gunshot.volume = 0.05; //avoid tinnitus
       gunshot.play();
+      // Update the score after each shot to show a hit or miss ("t" or "y")
+      // RESULT_SCORE.updateScore("t");
     }
   };
 }

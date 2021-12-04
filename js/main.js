@@ -44,6 +44,7 @@ const repo = "https://raw.githubusercontent.com/RBugge/webgl-game/main/";
 
 let LOOK_SENSITIVITY = 10; // global value to share
 const GUI = new gui();
+const RESULT_SCORE = new score();
 
 let targets;
 let modelsGlobal = null;
@@ -322,6 +323,7 @@ onRender = () => {
   }
 
   GUI.run();
+
   renderSkybox(skyboxProgramInfo);
   Input.resetInput();
   if (passes < WAIT_FRAMES * 30) passes++;
@@ -336,8 +338,11 @@ targetRespawn = () => {
       -(Math.random() * 15 + 15),
     ]);
 };
-countdownTimer = () => {
+function countdownTimer() {
   setTimeout(function () {
     console.log("Times up.");
-  }, 60000);
-};
+    RESULT_SCORE.finalScore();
+    showGui = true;
+    openResultMenu();
+  }, 15000);
+}

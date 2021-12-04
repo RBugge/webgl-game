@@ -42,6 +42,7 @@ class gui {
     ) {
       document.exitPointerLock();
       console.log("showing result screen");
+
       const list = document.querySelectorAll(".result");
       for (let i of list) {
         i.style.visibility = "visible";
@@ -58,6 +59,7 @@ class gui {
         i.style.visibility = "hidden";
       }
       showCrosshair();
+      countdownTimer();
       document.getElementById("crosshair").src =
         repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
       showMenu = false;
@@ -110,6 +112,7 @@ function closeMainMenu() {
   document.getElementById("crosshair").src =
     repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
   showCrosshair();
+  countdownTimer();
   canvas.requestPointerLock();
 }
 
@@ -120,9 +123,21 @@ function closeResultMenu() {
     i.style.visibility = "hidden";
   }
   showMenu = false;
-  document.getElementById("crosshair").src =
-    repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
-  showCrosshair();
+  showGui = false;
+  hideCrosshair();
+  document.exitPointerLock();
+}
+
+function openResultMenu() {
+  console.log("opening result screen");
+  const list2 = document.querySelectorAll(".result");
+  for (let i of list2) {
+    i.style.visibility = "visible";
+  }
+  showMenu = false;
+  showGui = true;
+
+  hideCrosshair();
   document.exitPointerLock();
 }
 
@@ -135,6 +150,7 @@ function openMenu() {
   }
   showMenu = true;
   showGui = false;
+
   document.getElementById("crosshair").src = "";
 }
 
