@@ -38,6 +38,8 @@ let canvas;
 let showGui = false;
 let showMenu = true;
 
+let difficulty = "easy";
+
 let LOOK_SENSITIVITY = 10; // global value to share
 const GUI = new gui();
 
@@ -246,7 +248,7 @@ window.addEventListener("load", async function () {
     metallic: textures.levelMetallic,
   })
     .scale(55)
-    .rotate({y: 90})
+    .rotate({ y: 90 })
     .setPosition([0, 7, 0]);
 
   // start render loop

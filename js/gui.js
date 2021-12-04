@@ -14,6 +14,7 @@ class gui {
     }
     showGui = false;
     showMenu = true;
+    setEasy();
   }
 
   run = () => {
@@ -99,4 +100,33 @@ class gui {
 
     this.lastSensitivity = LOOK_SENSITIVITY;
   };
+}
+
+function closeMainMenu() {
+  canvas.requestPointerLock();
+  console.log("closing main menu screen");
+  const list2 = document.querySelectorAll(".main_menu");
+  for (let i of list2) {
+    i.style.visibility = "hidden";
+  }
+  showMenu = false;
+}
+
+function setEasy() {
+  document.getElementById("easyDifficulty").style.color = "#f99e1a";
+  document.getElementById("mediumDifficulty").style.color = "white";
+  document.getElementById("hardDifficulty").style.color = "white";
+  difficulty = "easy";
+}
+function setMedium() {
+  document.getElementById("easyDifficulty").style.color = "white";
+  document.getElementById("mediumDifficulty").style.color = "#f99e1a";
+  document.getElementById("hardDifficulty").style.color = "white";
+  difficulty = "medium";
+}
+function setHard() {
+  document.getElementById("easyDifficulty").style.color = "white";
+  document.getElementById("mediumDifficulty").style.color = "white";
+  document.getElementById("hardDifficulty").style.color = "#f99e1a";
+  difficulty = "hard";
 }
