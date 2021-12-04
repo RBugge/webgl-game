@@ -284,7 +284,7 @@ updateViewMatrix = () => {
 // Clone/destroy test
 let j = 0;
 let passes = 0;
-const WAIT_FRAMES = 20;
+const WAIT_FRAMES = 60;
 // Main Loop, called every frame
 onRender = () => {
   // Example: Pauses the game when menu is up
@@ -324,7 +324,7 @@ onRender = () => {
   GUI.run();
   renderSkybox(skyboxProgramInfo);
   Input.resetInput();
-  if (passes < WAIT_FRAMES) passes++;
+  if (passes < WAIT_FRAMES * 30) passes++;
 };
 
 targetRespawn = () => {
