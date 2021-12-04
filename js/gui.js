@@ -1,6 +1,7 @@
 class gui {
   constructor(params) {
     this.prevP = false;
+    this.crosshair = -1;
     this.framesLeft = Math.floor(1 / dt) * 2;
     this.showSensitivity = false;
     this.lastSensitivity = LOOK_SENSITIVITY;
@@ -103,13 +104,16 @@ class gui {
 }
 
 function closeMainMenu() {
-  canvas.requestPointerLock();
   console.log("closing main menu screen");
   const list2 = document.querySelectorAll(".main_menu");
   for (let i of list2) {
     i.style.visibility = "hidden";
   }
   showMenu = false;
+  document.getElementById("crosshair").style.visibility = "visible";
+  (document.getElementById("crosshair").src =
+    repo + "assets/Textures/crosshairs/" + crosshair + ".png"),
+    canvas.requestPointerLock();
 }
 
 function setEasy() {
@@ -129,4 +133,13 @@ function setHard() {
   document.getElementById("mediumDifficulty").style.color = "white";
   document.getElementById("hardDifficulty").style.color = "#f99e1a";
   difficulty = "hard";
+}
+function setCrosshair(val) {
+  GUI.crosshair = parseInt(val);
+  console.log(GUI.crosshair);
+  for (let i = 0; i < 12; i++) {
+    document.getElementById("crosshair" + i).style.backgroundColor =
+      "transparent";
+  }
+  document.getElementById("crosshair" + val).style.backgroundColor = "#fff";
 }
