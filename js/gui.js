@@ -105,10 +105,24 @@ function closeMainMenu() {
     i.style.visibility = "hidden";
   }
   showMenu = false;
+  showGui = false;
   document.getElementById("crosshair").src =
     repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
   showCrosshair();
   canvas.requestPointerLock();
+}
+
+function closeResultMenu() {
+  console.log("closing result screen");
+  const list2 = document.querySelectorAll(".result");
+  for (let i of list2) {
+    i.style.visibility = "hidden";
+  }
+  showMenu = false;
+  document.getElementById("crosshair").src =
+    repo + "assets/Textures/crosshairs/" + GUI.crosshair + ".png";
+  showCrosshair();
+  document.exitPointerLock();
 }
 
 function openMenu() {
@@ -119,6 +133,7 @@ function openMenu() {
     i.style.visibility = "visible";
   }
   showMenu = true;
+  showGui = false;
   document.getElementById("crosshair").src = "";
 }
 
