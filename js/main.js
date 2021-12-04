@@ -41,7 +41,7 @@ let showMenu = true;
 let LOOK_SENSITIVITY = 10; // global value to share
 const GUI = new gui();
 
-let targets = [];
+let targets;
 let bullets = [];
 let modelsGlobal = null;
 
@@ -220,8 +220,9 @@ window.addEventListener("load", async function () {
       positive y will move target to up, negative y down
       positive z will move target behind player, negative in front
    */
+  targets = new GameObject();
   for (let i = 0; i < 20; i++) {
-    target = new GameObject({
+    targets.addChild(new GameObject({
       model: models.target,
       texture: textures.target,
       normalTexture: textures.targetNormal,
@@ -233,8 +234,7 @@ window.addEventListener("load", async function () {
         (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
         Math.random() < 0.5 ? -(Math.random() * 4) + 1 : Math.random() * 11 + 4,
         -(Math.random() * 15 + 15),
-      ]);
-    targets.push(target);
+      ]));
   }
 
   level = new GameObject({
@@ -246,7 +246,7 @@ window.addEventListener("load", async function () {
     metallic: textures.levelMetallic,
   })
     .scale(55)
-    .rotate({y: 90})
+    .rotate({ y: 90 })
     .setPosition([0, 7, 0]);
 
   // start render loop
@@ -317,7 +317,7 @@ onRender = () => {
   // Press t to destory a target and replace that with a new one, which proves that my targetRespawn works as intended.
   if (Input.isKeyDown("t")) {
     targetRespawn();
-    targets[j].destroy();
+    targets.children[j].destroy();
     j++;
   }
 
@@ -328,15 +328,13 @@ onRender = () => {
 };
 
 targetRespawn = () => {
-  targets.push(
-    targets[j]
+  targets.children[j]
       .clone()
       .setPosition([
         (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
         Math.random() < 0.5 ? -(Math.random() * 4) + 1 : Math.random() * 11 + 4,
         -(Math.random() * 15 + 15),
-      ])
-  );
+      ]);
 };
 countdownTimer = () => {
   setTimeout(function () {
