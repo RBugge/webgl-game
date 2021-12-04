@@ -245,9 +245,9 @@ window.addEventListener("load", async function () {
     script: levelScript,
     metallic: textures.levelMetallic,
   })
-    .scale(50)
-    .rotate({ y: 90 })
-    .setPosition([0, 0, 0]);
+    .scale(55)
+    .rotate({y: 90})
+    .setPosition([0, 7, 0]);
 
   // start render loop
   gameLoop = new GameLoop(onRender).start();
