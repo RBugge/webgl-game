@@ -27,12 +27,11 @@ class GameObject {
             if (params.script) {
                 this.script = new params.script(this);
                 this.update = this.script.update;
+                this.onCollision = this.script.onCollision;
             }
 
             if (params.render || (params.render === undefined))
                 this.render = (this.script && this.script.render) ? this.script.render : defaultRender;
-            if (this.collider)
-                this.collider.callback = this.script.onCollision;
         }
 
         if (this.model) {
