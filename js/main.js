@@ -36,9 +36,10 @@ let scene = [];
 let canvas;
 
 let showGui = false;
+let showMenu = true;
 
 let LOOK_SENSITIVITY = 10; // global value to share
-const menu = new gui();
+const GUI = new gui();
 
 let targets = [];
 let bullets = [];
@@ -105,7 +106,9 @@ window.addEventListener("load", async function () {
       flipY: true,
     },
     targetNormal: {
-      src:  repo + "assets/Textures/target_textures/GrainyPlastic_Normal_OpenGL.png",
+      src:
+        repo +
+        "assets/Textures/target_textures/GrainyPlastic_Normal_OpenGL.png",
       flipY: true,
     },
     level: {
@@ -134,7 +137,9 @@ window.addEventListener("load", async function () {
     cube: createSCs(await loadOBJ(repo + "assets/default/cube.obj")),
     rayman: createSCs(await loadOBJ(repo + "assets/rayman/raymanModel.obj")),
     boy: createSCs(await loadOBJ(repo + "assets/boy/BoyOBJ.obj")),
-    revolver: createSCs(await loadOBJ(repo + "assets/revolver/revolverNoSight.obj")),
+    revolver: createSCs(
+      await loadOBJ(repo + "assets/revolver/revolverNoSight.obj")
+    ),
     target: createSCs(await loadOBJ(repo + "assets/target/Target.obj")),
     level: createSCs(await loadOBJ(repo + "assets/level/LevelPlaceholder.obj")),
   };
@@ -225,9 +230,10 @@ window.addEventListener("load", async function () {
     })
       .rotate({ x: 90 })
       .setPosition([
-        (Math.random() < 0.5 ? -1 : 1) * (Math.random() * (-25) + 25),
-        (Math.random() < 0.5 ? -(Math.random() * (4)) + 1 : (Math.random() * (11) + 4)),
-        -(Math.random() * (15) + 15)]);
+        (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
+        Math.random() < 0.5 ? -(Math.random() * 4) + 1 : Math.random() * 11 + 4,
+        -(Math.random() * 15 + 15),
+      ]);
     targets.push(target);
   }
 
@@ -240,9 +246,8 @@ window.addEventListener("load", async function () {
     metallic: textures.levelMetallic,
   })
     .scale(50)
-    .rotate({y: 90})
+    .rotate({ y: 90 })
     .setPosition([0, -5, 0]);
-
 
   // start render loop
   gameLoop = new GameLoop(onRender).start();
@@ -278,11 +283,13 @@ updateViewMatrix = () => {
 
 // Clone/destroy test
 let j = 0;
-
+let passes = 0;
+const WAIT_FRAMES = 20;
 // Main Loop, called every frame
 onRender = () => {
   // Example: Pauses the game when menu is up
-  if(showGui) return menu.run();
+  if (showGui && passes > WAIT_FRAMES) return GUI.run();
+  if (showMenu && passes > WAIT_FRAMES) return GUI.run();
 
   // Update gl canvas and aspect ratio when resizing window
   twgl.resizeCanvasToDisplaySize(gl.canvas);
@@ -308,25 +315,31 @@ onRender = () => {
 
   // Input to test the destruction of objects.
   // Press t to destory a target and replace that with a new one, which proves that my targetRespawn works as intended.
-  if (Input.isKeyDown("t")){
+  if (Input.isKeyDown("t")) {
     targetRespawn();
     targets[j].destroy();
     j++;
   }
 
-  menu.run();
+  GUI.run();
   renderSkybox(skyboxProgramInfo);
   Input.resetInput();
+  if (passes < WAIT_FRAMES) passes++;
 };
 
 targetRespawn = () => {
-  targets.push(targets[j].clone().setPosition([
-    (Math.random() < 0.5 ? -1 : 1) * (Math.random() * (-25) + 25),
-    (Math.random() < 0.5 ? -(Math.random() * (4)) + 1 : (Math.random() * (11) + 4)),
-    -(Math.random() * (15) + 15)]));
-}
-countdownTimer = () =>{
+  targets.push(
+    targets[j]
+      .clone()
+      .setPosition([
+        (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
+        Math.random() < 0.5 ? -(Math.random() * 4) + 1 : Math.random() * 11 + 4,
+        -(Math.random() * 15 + 15),
+      ])
+  );
+};
+countdownTimer = () => {
   setTimeout(function () {
     console.log("Times up.");
   }, 60000);
-}
+};

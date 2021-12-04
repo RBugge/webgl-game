@@ -37,6 +37,19 @@
         align-items: center;
         justify-content: center;
       }
+
+      .centered {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        /* bring your own prefixes */
+        transform: translate(-50%, -50%);
+      }
+      ul.no-bullets {
+        list-style-type: none; /* Remove bullets */
+        padding: 0; /* Remove padding */
+        margin: 0; /* Remove margins */
+      }
     </style>
 
     <!-- Add all scripts here -->
@@ -66,7 +79,6 @@
     <script src="assets/revolver/gunScript.js" defer></script>
     <script src="assets/level/levelShaders.js" defer></script>
     <script src="assets/level/levelScript.js" defer></script>
-    
 
     <script src="assets/camera/cameraScript.js" defer></script>
     <script src="assets/player/playerScript.js" defer></script>
@@ -205,7 +217,160 @@
         "
         id="sens"
       >
-        test
+        sensitivity
+      </div>
+      <!-- <img
+        src="assets/Textures/crosshairs/T_Crosshair_Cross_Green.png"
+        class="centered"
+      /> -->
+      <div
+        style="
+          width: 100%;
+          height: 10%;
+          margin: 20;
+          top: 75px;
+          position: fixed;
+          z-index: 1;
+          background-color: black;
+          opacity: 75%;
+        "
+        class="main_menu"
+        id="main_menu_head"
+      >
+        <h1
+          style="
+            opacity: 100%;
+            color: white;
+            font-family: SteelFish;
+            font-size: 120px;
+          "
+        >
+          Aim Trainer
+        </h1>
+      </div>
+      <div
+        style="
+          width: 50%;
+          height: 60%;
+          max-height: 500px;
+          /* height: fit-content; */
+          top: 30vh;
+          position: fixed;
+          z-index: 1;
+          background-color: #405275;
+          opacity: 75%;
+          display: inline-block;
+          text-align: left;
+
+          /* padding-left: 120px; */
+          padding-left: 60px;
+          padding-right: 60px;
+          /* padding-top: 30px;
+          padding-bottom: 0px; */
+        "
+        class="main_menu"
+        id="menu_body"
+      >
+        <ul class="no-bullets">
+          <li>
+            <div id="difficultySelectCaption">
+              <h1
+                style="
+                  opacity: 100%;
+                  color: #f99e1a;
+                  font-family: SteelFish;
+                  font-size: 50px;
+                "
+              >
+                Difficulty:
+              </h1>
+            </div>
+          </li>
+          <li>
+            <div id="difficultySelect">
+              <ul class="no-bullets">
+                <li
+                  style="
+                    opacity: 100%;
+                    color: #fff;
+                    font-family: SteelFish;
+                    font-size: 40px;
+                    display: inline;
+                    margin: 0px 20px;
+                  "
+                >
+                  Easy
+                </li>
+                <li
+                  style="
+                    opacity: 100%;
+                    color: #fff;
+                    font-family: SteelFish;
+                    font-size: 40px;
+                    display: inline;
+                    margin: 0px 20px;
+                  "
+                >
+                  Medium
+                </li>
+                <li
+                  style="
+                    opacity: 100%;
+                    color: #fff;
+                    font-family: SteelFish;
+                    font-size: 40px;
+                    display: inline;
+                    margin: 0px 20px;
+                  "
+                >
+                  Hard
+                </li>
+              </ul>
+            </div>
+          </li>
+          <div id="crosshairSelect">
+            <h1
+              style="
+                opacity: 100%;
+                color: #f99e1a;
+                font-family: SteelFish;
+                font-size: 50px;
+              "
+            >
+              Select Crosshair:
+            </h1>
+          </div>
+        </ul>
+      </div>
+      <div
+        style="
+          display: inline-block;
+          text-align: right;
+          width: 100%;
+          position: fixed;
+          margin-top: 80vh;
+          margin-right: 20vw;
+        "
+        class="main_menu"
+      >
+        <button
+          style="
+            border-width: 2px;
+            border-radius: 5px;
+            border-color: #218ffe;
+            background-color: transparent;
+            color: #f99e1a;
+            font-family: SteelFish;
+            font-size: 45px;
+            padding-left: 30px;
+            padding-right: 30px;
+          "
+          id="play_button"
+          type="button"
+          onclick="console.log('start')"
+        >
+          Play
+        </button>
       </div>
       <canvas id="glcanvas"></canvas>
     </div>

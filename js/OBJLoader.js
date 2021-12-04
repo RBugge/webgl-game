@@ -1,3 +1,4 @@
+// THREE.js OBJLoader source file, imported manually.
 ( function () {
 
 	const _object_pattern = /^[og]\s*(.+)?/; // mtllib file_reference
