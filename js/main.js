@@ -241,7 +241,7 @@ window.addEventListener("load", async function () {
   })
     .scale(50)
     .rotate({y: 90})
-    .setPosition([0, -5, 0]);
+    .setPosition([0, 0, 0]);
 
 
   // start render loop
