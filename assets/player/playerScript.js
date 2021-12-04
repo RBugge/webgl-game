@@ -121,12 +121,19 @@ class playerScript {
     if (Input.isMouseDown("left") && !showMenu) {
       //change to Input.isKeyDown("left") when implemented
       //TODO: detect if target hit
+      let targetHitFlag = false;
+      targets.children.forEach(t => {
+        if (checkIfWithinRange(t.position, t.modelDim.dia)) {
+          targetHitFlag = true;
+          t.destroy();
+        }
+      });
 
-      //if(<target hit>){
-      //score.updateScore(<hit>);
-      //}else{
-      //score.updateScore(<miss>);
-      //}
+      if(targetHitFlag){
+      RESULT_SCORE.updateScore('t');
+      }else{
+      RESULT_SCORE.updateScore('y');
+      }
 
       //play gunshot sound
       let gunshot = new Audio("assets/audio/gunshot.mp3");
