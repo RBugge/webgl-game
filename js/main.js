@@ -32,6 +32,7 @@ let radius = 1;
 
 let defaultModel;
 
+let models;
 let textures;
 let scene = [];
 
@@ -132,7 +133,7 @@ window.addEventListener("load", async function () {
   initSkybox();
 
   // Load models here, only OBJs can be loaded currently
-  const models = {
+  models = {
     sphere: createSCs(await loadOBJ(repo + "assets/default/sphere.obj")),
     cube: createSCs(await loadOBJ(repo + "assets/default/cube.obj")),
     rayman: createSCs(await loadOBJ(repo + "assets/rayman/raymanModel.obj")),
@@ -350,11 +351,19 @@ onRender = () => {
 };
 
 targetRespawn = () => {
-  let newTarget = targets.children[j]
-    .clone()
+  let newTarget = new GameObject({
+    model: models.target,
+    texture: textures.target,
+    normalTexture: textures.targetNormal,
+    shaders: targetShadersAlt,
+    script: targetScript,
+  })
+    .rotate({ x: 90 })
     .setPosition([
       (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
-      Math.random() < 0.5 ? -(Math.random() * 4) + 1 : Math.random() * 11 + 4,
+      Math.random() < 0.5
+        ? -(Math.random() * 4) + 1
+        : Math.random() * 11 + 4,
       -(Math.random() * 15 + 15),
     ]);
 
