@@ -332,13 +332,26 @@ onRender = () => {
 };
 
 targetRespawn = () => {
-  targets.children[j]
-    .clone()
-    .setPosition([
-      (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
-      Math.random() < 0.5 ? -(Math.random() * 4) + 1 : Math.random() * 11 + 4,
-      -(Math.random() * 15 + 15),
-    ]);
+  targets = new GameObject();
+  for (let i = 0; i < 20; i++) {
+    targets.addChild(
+      new GameObject({
+        model: modelsGlobal.target,
+        texture: textures.target,
+        normalTexture: textures.targetNormal,
+        shaders: targetShadersAlt,
+        script: targetScript,
+      })
+        .rotate({ x: 90 })
+        .setPosition([
+          (Math.random() < 0.5 ? -1 : 1) * (Math.random() * -25 + 25),
+          Math.random() < 0.5
+            ? -(Math.random() * 4) + 1
+            : Math.random() * 11 + 4,
+          -(Math.random() * 15 + 15),
+        ])
+    );
+  }
 };
 function countdownTimer() {
   console.log("value of running is", running);
