@@ -122,17 +122,20 @@ class playerScript {
       //change to Input.isKeyDown("left") when implemented
       //TODO: detect if target hit
       let targetHitFlag = false;
-      targets.children.forEach(t => {
+      targets.children.forEach((t) => {
         if (checkIfWithinRange(t.position, t.modelDim.dia)) {
           targetHitFlag = true;
           t.destroy();
         }
       });
+      if (targets.children.length == 0) {
+        targetRespawn();
+      }
 
-      if(targetHitFlag){
-      RESULT_SCORE.updateScore('t');
-      }else{
-      RESULT_SCORE.updateScore('y');
+      if (targetHitFlag) {
+        RESULT_SCORE.updateScore("t");
+      } else {
+        RESULT_SCORE.updateScore("y");
       }
 
       //play gunshot sound
