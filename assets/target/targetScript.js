@@ -84,15 +84,17 @@ class targetScript {
             this.oThis.positiveY = true; //reverse y direction
         }
 
-        //translate targets
-        if(this.oThis.positiveX && this.oThis.positiveY){
-            this.oThis.translate([0.05, 0.05, 0], true);
-        }else if(!this.oThis.positiveX && this.oThis.positiveY){
-            this.oThis.translate([-0.05, 0.05, 0], true);
-        }else if(this.oThis.positiveX && !this.oThis.positiveY){
-            this.oThis.translate([0.05, -0.05, 0], true);
-        }else{
-            this.oThis.translate([-0.05, -0.05, 0], true);
+        //translate targets on medium and hard
+        if(difficulty == "medium" || difficulty == "hard"){
+            if(this.oThis.positiveX && this.oThis.positiveY){
+                this.oThis.translate([0.05, 0.05, 0], true);
+            }else if(!this.oThis.positiveX && this.oThis.positiveY){
+                this.oThis.translate([-0.05, 0.05, 0], true);
+            }else if(this.oThis.positiveX && !this.oThis.positiveY){
+                this.oThis.translate([0.05, -0.05, 0], true);
+            }else{
+                this.oThis.translate([-0.05, -0.05, 0], true);
+            }
         }
 
     }
