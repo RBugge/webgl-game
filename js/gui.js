@@ -15,9 +15,9 @@ class gui {
     }
     showGui = false;
     showMenu = true;
+    hideCrosshair();
     setEasy();
     setCrosshair(0, true, this);
-    hideCrosshair();
   }
 
   run = () => {
